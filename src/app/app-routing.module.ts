@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo, customClaims, hasCustomClaim } from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo, hasCustomClaim } from '@angular/fire/compat/auth-guard';
 
 const adminOnly = () => map(() => {
   hasCustomClaim('admin') ? true : redirectUnauthorizedToLogin
