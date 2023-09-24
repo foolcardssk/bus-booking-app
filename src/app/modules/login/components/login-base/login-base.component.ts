@@ -6,12 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./login-base.component.css']
 })
 export class LoginBaseComponent {
+
   signinState: boolean = true;
-  switchStateRegister(){
-      this.signinState = false;
+
+  switchStateRegister() {
+    this.signinState = false;
   }
-  switchStateLogin(){
-      this.signinState = true;
+  switchStateLogin() {
+    this.signinState = true;
   }
 
 }

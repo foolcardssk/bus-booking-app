@@ -1,13 +1,11 @@
-import { map } from 'rxjs/operators';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo, hasCustomClaim } from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
+import { AdminAuthGuard } from './gaurds/admin-auth.guard';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
-const adminOnly = () => map(() => {
-  hasCustomClaim('admin') ? true : redirectUnauthorizedToLogin
-});
-const redirectLoggedInToItems = () => redirectLoggedInTo(['/traveller']);
+const redirectLoggedInToBase = () => redirectLoggedInTo(['/traveller']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/signin']);
 
 const routes: Routes = [
@@ -15,7 +13,13 @@ const routes: Routes = [
     path: 'signin',
     loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectLoggedInToItems }
+    data: { authGuardPipe: redirectLoggedInToBase }
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AdminAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'traveller',
@@ -23,18 +27,16 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
-  {
-    path: 'admin',
-    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: adminOnly }
-  },
+  { path: 'unauthorized', component: UnauthorizedComponent },
+
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

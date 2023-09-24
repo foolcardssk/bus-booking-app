@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBus } from '@fortawesome/free-solid-svg-icons';
 import { FireAuthService } from 'src/app/services/fire-auth.service';
+import { FireStoreService } from 'src/app/services/fire-store.service';
 
 @Component({
   selector: 'app-user-signup',
@@ -13,7 +14,7 @@ export class UserSignupComponent implements OnInit {
   faBus = faBus;
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: FireAuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: FireAuthService, private db: FireStoreService, private router: Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -31,8 +32,15 @@ export class UserSignupComponent implements OnInit {
   onSignup() {
     this.authService.userSignup(this.registerForm.value)
       .then(user => {
-        console.log('User Registered', user.credential);
-        this.router.navigate(['/traveller']);
+        const uid = user.user.uid;
+        this.db.addUserRole(uid, 'peasant')
+          .then(() => {
+            console.log('peasant role created !');
+            this.router.navigate(['/traveller']);
+          })
+          .catch(err=>{
+            console.error('Error setting user role:', err);
+          });
       })
       .catch(err => {
         console.log('User Creation error', err);

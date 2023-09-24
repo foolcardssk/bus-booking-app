@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBus } from '@fortawesome/free-solid-svg-icons';
 import { FireAuthService } from 'src/app/services/fire-auth.service';
+import { FireStoreService } from 'src/app/services/fire-store.service';
+import { UserSignupComponent } from '../user-signup/user-signup.component';
 
 @Component({
   selector: 'app-user-login',
@@ -13,7 +15,7 @@ export class UserLoginComponent implements OnInit {
   faBus = faBus;
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: FireAuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: FireAuthService, private router: Router, private db: FireStoreService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -24,13 +26,21 @@ export class UserLoginComponent implements OnInit {
 
   onLogin() {
     this.authService.userLogin(this.loginForm.value)
-    .then(user=>{
-      console.log("User signed in", user.credential);
-      this.router.navigate(['/traveller']);
-    })
-    .catch(err=>{
-      console.log("User signin error", err);
-    });
+      .then(user => {
+        this.db.getUserRoleByUid(user.user.uid)
+          .subscribe(res => {
+            const role = res.role;
+            if (role === 'admin') {
+              this.router.navigate(['/admin']);
+            }
+            else {
+              this.router.navigate(['/traveller']);
+            }
+          });
+      })
+      .catch(err => {
+        console.log("User signin error", err);
+      });
   }
 
 }
