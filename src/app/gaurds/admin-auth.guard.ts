@@ -21,7 +21,7 @@ export class AdminAuthGuard {
       take(1),
       switchMap(user => {
         if (!user) {
-          this.router.navigate(['/signin']);
+          this.router.navigate(['/sigin']);
           return Promise.resolve(false);
         }
 
