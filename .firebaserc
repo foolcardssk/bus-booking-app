@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "bus-booking-app-a0c95": {
+      "hosting": {
+        "bus-booking-app": [
+          "bus-booking-app-a0c95"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "bus-booking-app-a0c95"
+  }
+}

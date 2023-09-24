@@ -1,0 +1,48 @@
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <div class="container text-center">
+    <div class="form-outline mb-4 mt-4">
+      <div class="title">
+        Sign-In
+        <fa-icon [icon]="faBus"></fa-icon>
+      </div>
+    </div>
+
+    <!-- Email input -->
+    <div class="form-outline mb-4 mt-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          formControlName="email"
+          type="text"
+          matInput
+          placeholder="Registered Email"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-4 mt-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          formControlName="password"
+          type="password"
+          matInput
+          placeholder="Super Secret Password !"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Submit button -->
+    <div class="form-outline mb-4 mt-4">
+      <button
+        [disabled]="loginForm.invalid"
+        type="submit"
+        mat-stroked-button
+        color="primary"
+      >
+        Login
+      </button>
+    </div>
+  </div>
+</form>
