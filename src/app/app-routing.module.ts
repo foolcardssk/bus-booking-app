@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
+import { AdminAuthGuard } from './gaurds/admin-auth.guard';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
-import { AdminAuthGuard } from './gaurds/admin-auth.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
 const redirectLoggedInToBase = () => redirectLoggedInTo(['/traveller']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/signin']);
@@ -18,8 +18,7 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
-    canActivate: [AdminAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin }
+    canActivate: [AdminAuthGuard]
   },
   {
     path: 'traveller',

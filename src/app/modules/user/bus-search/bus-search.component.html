@@ -1,0 +1,45 @@
+<div class="container search-bus">
+    <div class="d-flex justify-content-center">
+        <div class="text-center flex-fill">
+            <input
+                class="form-control"
+                list="datalistOptions"
+                id="exampleDataList"
+                placeholder="Source"
+            />
+            <datalist id="datalistOptions">
+                <option value="San Francisco"></option>
+                <option value="New York"></option>
+                <option value="Seattle"></option>
+                <option value="Los Angeles"></option>
+                <option value="Chicago"></option>
+            </datalist>
+        </div>
+        <div class="text-center flex-fill">
+            <input
+                class="form-control"
+                list="datalistOptions"
+                id="exampleDataList"
+                placeholder="Destination"
+            />
+            <datalist id="datalistOptions">
+                <option value="San Francisco"></option>
+                <option value="New York"></option>
+                <option value="Seattle"></option>
+                <option value="Los Angeles"></option>
+                <option value="Chicago"></option>
+            </datalist>
+        </div>
+        <div class="text-center flex-fill">
+            <input
+                class="form-control"
+                type="date"
+                id="date"
+                min="{{ getCurrentDate() }}"
+            />
+        </div>
+    </div>
+    <div class="text-center mt-2">
+        <button mat-raised-button>Search</button>
+    </div>
+</div>

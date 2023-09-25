@@ -1,0 +1,10 @@
+.container {
+    padding: 10px;
+    position: relative;
+}
+
+.pos {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}

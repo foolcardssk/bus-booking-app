@@ -1,0 +1,37 @@
+<div class="container list-item">
+    <div class="d-flex">
+        <div class="flex-fill text-start">
+            <b>Name : </b> My Bus
+            <br />
+            <b>No. </b> LNK03214
+        </div>
+        <div class="flex-fill">
+            <div>
+                <b>From : </b> My House
+                <br />
+                <b>to : </b> IDP
+            </div>
+        </div>
+        <div class="flex-fill text-end">
+            <b>Avg. Price : </b>
+            <i class="fa-solid fa-indian-rupee-sign"></i> 100 <br />
+            <b>Seats : </b> 32
+        </div>
+        <hr />
+    </div>
+    <div class="text-center view-seat" (click)="viewSeats = !viewSeats">
+        <hr />
+        <span *ngIf="viewSeats === false; else elsePart">View Seats</span>
+        <ng-template #elsePart><span>Hide Seats</span></ng-template>
+    </div>
+
+    <!-- Seats Section -->
+
+    <div class="container" *ngIf="viewSeats">
+        <hr />
+        <div class="d-flex">
+            <app-bus-seats class="col-6"></app-bus-seats>
+            <app-bus-seat-price class="col-6"></app-bus-seat-price>
+        </div>
+    </div>
+</div>
