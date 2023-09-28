@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BusLayout } from 'src/app/models/bus-data.model';
 
 @Component({
   selector: 'app-bus-seats',
