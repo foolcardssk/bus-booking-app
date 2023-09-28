@@ -20,15 +20,13 @@ interface UpperDeck {
     row3: Seat[];
 }
 
-export interface Dimension {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    Diff: number;
-}
-
 export interface BusLayout {
     lowerDeck: lowerDeck;
     upperDeck: UpperDeck;
+}
+
+export interface PickedSeats {
+    seatNo: string;
+    seatType: string;
+    seatPrice: number;
 }

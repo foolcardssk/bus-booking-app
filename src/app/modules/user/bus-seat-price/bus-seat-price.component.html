@@ -1,3 +1,29 @@
-<div class="container border">
-    Price Details Go Here !
+<div class="container">
+    <b> Selected Seats : </b>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Seat No.</th>
+                <th scope="col">Seat Type.</th>
+                <th scope="col">Seat Price.</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let seat of seats; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ seat.seatNo }}</td>
+                <td>{{ seat.seatType }}</td>
+                <td>{{ seat.seatPrice }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="seats.length > 0" class="text-center">
+        <br /><b>Total : </b> <i class="fa-solid fa-indian-rupee-sign"></i>
+        {{ calculateTotal() }}
+        <br />
+        <br />
+        <button mat-stroked-button>Continue</button>
+    </div>
 </div>
