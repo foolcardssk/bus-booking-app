@@ -1,11 +1,11 @@
 <div class="container">
     <div style="display: flex; justify-content: space-between">
-        <svg width="320" height="430" [currentScale]="scale">
+        <svg width="250" height="350" [currentScale]="scale">
             <!-- Draw bus background -->
             <g transform="rotate(90, 200, 200)">
                 <rect
-                    x="10"
-                    y="90"
+                    x="20"
+                    y="55"
                     width="520"
                     height="220"
                     rx="20"
@@ -13,7 +13,7 @@
                     fill="#f2f2f2"
                 />
                 <!-- Draw bus seats -->
-                <g id="seats" [attr.transform]="'translate(10, 0)'">
+                <g id="seats">
                     <ng-container
                         *ngFor="
                             let row of busLayout.lowerDeck | keyvalue;
@@ -25,14 +25,14 @@
                         >
                             <rect
                                 [attr.x]="
-                                    40 +
+                                    60 +
                                     i * (seat.seatType === 'sleeper' ? 100 : 55)
                                 "
                                 [attr.y]="
                                     seat.seatType === 'sleeper' &&
                                     rowIndex === 2
-                                        ? 260
-                                        : 100 + rowIndex * 40
+                                        ? 230
+                                        : 70 + rowIndex * 40
                                 "
                                 [attr.width]="
                                     seat.seatType === 'sleeper' ? 65 : 30
@@ -48,14 +48,14 @@
                             <!-- Display seat number -->
                             <text
                                 [attr.x]="
-                                    55 +
+                                    75 +
                                     i * (seat.seatType === 'sleeper' ? 100 : 55)
                                 "
                                 [attr.y]="
                                     seat.seatType === 'sleeper' &&
                                     rowIndex === 2
-                                        ? 280
-                                        : 120 + rowIndex * 40
+                                        ? 250
+                                        : 90 + rowIndex * 40
                                 "
                                 font-size="15"
                                 fill="black"
@@ -70,12 +70,12 @@
             </g>
         </svg>
 
-        <svg width="320" height="430" [currentScale]="scale">
+        <svg width="250" height="350" [currentScale]="scale">
             <!-- Draw bus background -->
             <g transform="rotate(90, 200, 200)">
                 <rect
-                    x="10"
-                    y="90"
+                    x="20"
+                    y="55"
                     width="520"
                     height="220"
                     rx="20"
@@ -83,7 +83,7 @@
                     fill="#f2f2f2"
                 />
                 <!-- Draw bus seats -->
-                <g id="seats" [attr.transform]="'translate(10, 0)'">
+                <g id="seats">
                     <ng-container
                         *ngFor="
                             let row of busLayout.upperDeck | keyvalue;
@@ -95,14 +95,14 @@
                         >
                             <rect
                                 [attr.x]="
-                                    40 +
+                                    60 +
                                     i * (seat.seatType === 'sleeper' ? 100 : 50)
                                 "
                                 [attr.y]="
                                     seat.seatType === 'sleeper' &&
                                     rowIndex === 2
-                                        ? 260
-                                        : 110 + rowIndex * 40
+                                        ? 230
+                                        : 70 + rowIndex * 40
                                 "
                                 [attr.width]="
                                     seat.seatType === 'sleeper' ? 65 : 30
@@ -124,8 +124,8 @@
                                 [attr.y]="
                                     seat.seatType === 'sleeper' &&
                                     rowIndex === 2
-                                        ? 280
-                                        : 130 + rowIndex * 40
+                                        ? 250
+                                        : 90 + rowIndex * 40
                                 "
                                 font-size="15"
                                 fill="black"

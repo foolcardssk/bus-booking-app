@@ -1,11 +1,7 @@
-interface SleeperCar {
-    booked: boolean;
-    name?: string;
-    age?: number;
-    gender?: string;
-}
-
-interface SeatedCar {
+interface Seat {
+    seatNumber: number;
+    seatType: string;
+    price: number;
     booked: boolean;
     name?: string;
     age?: number;
@@ -13,14 +9,23 @@ interface SeatedCar {
 }
 
 interface lowerDeck {
-    row1: SeatedCar[];
-    row2: SeatedCar[];
-    row3: SleeperCar[];
+    row1: Seat[];
+    row2: Seat[];
+    row3: Seat[];
 }
+
 interface UpperDeck {
-    row1: SleeperCar[];
-    row2: SleeperCar[];
-    row3: SleeperCar[];
+    row1: Seat[];
+    row2: Seat[];
+    row3: Seat[];
+}
+
+export interface Dimension {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    Diff: number;
 }
 
 export interface BusLayout {
