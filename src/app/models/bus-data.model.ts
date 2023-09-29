@@ -31,4 +31,5 @@ export interface PickedSeats {
     seatNo: string;
     seatType: string;
     seatPrice: number;
+    seatConstraint?: boolean;
 }

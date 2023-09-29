@@ -1,0 +1,9 @@
+.legend-color {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 100%;
+    border: 1px black;
+    border-style: dotted;
+}

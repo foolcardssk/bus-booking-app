@@ -1,13 +1,14 @@
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Seat Details</h2>
+    <h2 class="text-center mb-4">Seat Personal Info</h2>
 
     <ng-container *ngIf="personalDetailForms.length > 0; else emptySeats">
         <div *ngFor="let form of personalDetailForms">
-            <div class="card mb-4">
+            <div class="card mb-4 size-it">
                 <h4 class="card-header">Seat {{ form.get("seatNo").value }}</h4>
                 <div class="card-body">
                     <form [formGroup]="form" class="row g-3">
-                        <div class="col-md-4">
+                        <div class="col">
+                            <!-- Changed to col -->
                             <label for="name" class="form-label">Name:</label>
                             <input
                                 id="name"
@@ -44,7 +45,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col">
+                            <!-- Changed to col -->
                             <label for="age" class="form-label">Age:</label>
                             <input
                                 id="age"
@@ -72,7 +74,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col">
+                            <!-- Changed to col -->
                             <label for="gender" class="form-label"
                                 >Gender:</label
                             >

@@ -16,20 +16,8 @@ export class BusSeatsComponent implements OnInit {
   constructor(private seatBookingService: SeatBookingService) { }
 
   ngOnInit(): void {
-    this.busLayout = {
-      lowerDeck: {
-        row1: this.seatBookingService.generateSeats(9, 'seated', 1),
-        row2: this.seatBookingService.generateSeats(9, 'seated', 2),
-        row3: this.seatBookingService.generateSeats(5, 'sleeper', 3),
-      },
-      upperDeck: {
-        row1: this.seatBookingService.generateSeats(5, 'sleeper', 4),
-        row2: this.seatBookingService.generateSeats(5, 'sleeper', 5),
-        row3: this.seatBookingService.generateSeats(5, 'sleeper', 6),
-      },
-      busName: 'My Bus',
-      busNo: 'LNK03214'
-    };
+    this.seatBookingService.initSeat();
+    this.busLayout = this.seatBookingService.bus;
   }
 
   isSeatSelected(seatNo: string) {

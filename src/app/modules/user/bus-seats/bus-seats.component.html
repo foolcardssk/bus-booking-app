@@ -1,8 +1,30 @@
-<div class="container">
+<div class="container" style="margin-top: -20px">
+    <div class="legend mt-4 d-flex text-center">
+        <div class="legend-item flex-fill">
+            <div class="legend-color" style="background-color: lightblue"></div>
+            <div class="legend-label">Male</div>
+        </div>
+        <div class="legend-item flex-fill">
+            <div class="legend-color" style="background-color: lightpink"></div>
+            <div class="legend-label">Female</div>
+        </div>
+        <div class="legend-item flex-fill">
+            <div class="legend-color" style="background-color: #ffffff"></div>
+            <div class="legend-label">Free</div>
+        </div>
+        <div class="legend-item flex-fill">
+            <div
+                class="legend-color"
+                style="background-color: lightgreen"
+            ></div>
+            <div class="legend-label">Picked</div>
+        </div>
+    </div>
     <div *ngIf="pickedSeats.length == 5" class="text-center" style="color: red">
         Max. 5 seats reached !
     </div>
-    <div style="display: flex; justify-content: space-between">
+
+    <div style="display: flex; margin-left: -50px">
         <svg width="320" height="430" [currentScale]="scale">
             <!-- Draw bus background -->
             <g transform="rotate(90, 200, 200)">
