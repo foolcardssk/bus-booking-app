@@ -1,26 +1,35 @@
-<div
-    class="container d-flex justify-content-center align-items-center min-vh-100"
->
-    <div class="card m-2 h-100 card-1">
-        <div class="card-body text-center d-flex flex-column">
-            <h5 class="card-title">Manage Bus</h5>
-            <p class="card-text">
-                Add, Decide, Specify <br />
-                All Your Bus needs
-            </p>
-        </div>
-    </div>
-    <div class="card m-2 h-100 card-2">
-        <div class="card-body text-center d-flex flex-column">
-            <h5 class="card-title">User View</h5>
-            <p class="card-text">Switch Into User View</p>
-        </div>
+<div class="center-div">
+    <div class="container text-center mb-4">
+        <h2>Admin Panel</h2>
     </div>
 
-    <div class="card m-2 h-100 card-3">
-        <div class="card-body text-center d-flex flex-column">
-            <h5 class="card-title">Booking Logs</h5>
-            <p class="card-text">View, Cancel, Review <br />all bookings</p>
+    <div class="container d-flex justify-content-center">
+        <div class="card m-2 card-1" (click)="onManage()">
+            <div class="text-center d-flex flex-column">
+                <h5 class="card-title mt-4">Manage Bus</h5>
+                <i class="fa-solid fa-list-check"></i>
+                <p class="card-body card-text">
+                    Add, Decide, Specify <br />
+                    All Your Bus needs
+                </p>
+            </div>
+        </div>
+        <div class="card m-2 card-2" (click)="onUserView()">
+            <div class="text-center d-flex flex-column">
+                <h5 class="card-title mt-4">User View</h5>
+                <i class="fa-solid fa-users-viewfinder"></i>
+                <p class="card-body card-text">Switch Into User View</p>
+            </div>
+        </div>
+
+        <div class="card m-2 card-3" (click)="onBookingLogs()">
+            <div class="text-center d-flex flex-column">
+                <h5 class="card-title mt-4">Booking Logs</h5>
+                <i class="fa-solid fa-dolly"></i>
+                <p class="card-body card-text">
+                    View, Cancel, Review <br />all bookings
+                </p>
+            </div>
         </div>
     </div>
 </div>

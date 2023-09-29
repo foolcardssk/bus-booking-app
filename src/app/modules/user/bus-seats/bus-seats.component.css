@@ -4,6 +4,5 @@
     display: inline-block;
     margin-right: 5px;
     border-radius: 100%;
-    border: 1px black;
-    border-style: dotted;
+    border: 1px black solid;
 }
