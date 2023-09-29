@@ -6,20 +6,21 @@ import { PersonalDetailsComponent } from './personal-details/personal-details.co
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: BaseLayoutComponent,
-    children: [
-      { path: 'home', component: UserHomeComponent },
-      { path: 'details', component: PersonalDetailsComponent }
-    ]
-  },
-  { path: '**', component: PageNotFoundComponent }
+    {
+        path: '',
+        component: BaseLayoutComponent,
+        children: [
+            { path: 'home', component: UserHomeComponent },
+            { path: 'details', component: PersonalDetailsComponent },
+            { path: '', redirectTo: '/traveller/home', pathMatch: 'full' }
+        ]
+    },
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class UserRoutingModule { }

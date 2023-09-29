@@ -31,7 +31,7 @@ export class UserLoginComponent implements OnInit {
           .subscribe(res => {
             const role = res.role;
             if (role === 'admin') {
-              this.router.navigate(['/admin']);
+              this.router.navigate(['/admin/home']);
             }
             else {
               this.router.navigate(['/traveller/home']);
