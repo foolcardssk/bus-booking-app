@@ -5,7 +5,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
-const redirectLoggedInToBase = () => redirectLoggedInTo(['/traveller']);
+const redirectLoggedInToBase = () => redirectLoggedInTo(['/traveller/home']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/signin']);
 
 const routes: Routes = [

@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BusLayout, PickedSeats } from '../models/bus-data.model';
+import { PickedSeats } from '../models/bus-data.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeatBookingService {
 
-  selectedSeats = new BehaviorSubject<PickedSeats[]>([]);
-
+  
+  selectedSeats = new BehaviorSubject<{ seats: PickedSeats[], busNo: string }>({ seats: [], busNo: '' });
+  
   constructor() { }
-
-
 
   generateSeats(count: number, seatType: string, row: number) {
     const seats = [];

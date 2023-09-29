@@ -27,13 +27,14 @@ export class BusSeatsComponent implements OnInit {
         row2: this.seatBookingService.generateSeats(5, 'sleeper', 5),
         row3: this.seatBookingService.generateSeats(5, 'sleeper', 6),
       },
+      busName: 'My Bus',
+      busNo: 'LNK03214'
     };
   }
 
   isSeatSelected(seatNo: string) {
     for (let seat of this.pickedSeats) {
       if (seat.seatNo === seatNo) {
-        console.log('Selected Seat:', seatNo);
         return 'lightgreen';
       }
     }
@@ -51,10 +52,10 @@ export class BusSeatsComponent implements OnInit {
     if (this.pickedSeats.length < 5) {
       this.pickedSeats.push({ seatNo: seatNo, seatType: seatType, seatPrice: seatPrice });
     }
-
-    console.log('seats picked : ', this.pickedSeats);
-
-    this.seatBookingService.selectedSeats.next(this.pickedSeats);
+    this.seatBookingService.selectedSeats.next({
+      seats: this.pickedSeats,
+      busNo: this.busLayout.busNo
+    });
   }
 
 }

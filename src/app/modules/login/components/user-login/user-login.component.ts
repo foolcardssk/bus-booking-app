@@ -34,7 +34,7 @@ export class UserLoginComponent implements OnInit {
               this.router.navigate(['/admin']);
             }
             else {
-              this.router.navigate(['/traveller']);
+              this.router.navigate(['/traveller/home']);
             }
           });
       })

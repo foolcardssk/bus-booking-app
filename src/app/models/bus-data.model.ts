@@ -23,6 +23,8 @@ interface UpperDeck {
 export interface BusLayout {
     lowerDeck: lowerDeck;
     upperDeck: UpperDeck;
+    busName: string;
+    busNo: string;
 }
 
 export interface PickedSeats {

@@ -1,6 +1,6 @@
 <div class="container list-item">
     <div class="d-flex">
-        <div class="flex-fill text-start">
+        <div class="flex-fill text-start bus-info">
             <b>Name : </b> My Bus
             <br />
             <b>No. </b> LNK03214
@@ -14,21 +14,20 @@
         </div>
         <div class="flex-fill text-end">
             <b>Avg. Price : </b>
-            <i class="fa-solid fa-indian-rupee-sign"></i> 100 <br />
+            <i class="fa-solid fa-indian-rupee-sign indian-rupee-icon"></i> 100
+            <br />
             <b>Seats : </b> 32
         </div>
-        <hr />
+        <hr class="hr-divider" />
     </div>
     <div class="text-center view-seat" (click)="viewSeats = !viewSeats">
-        <hr />
+        <hr class="hr-divider" />
         <span *ngIf="viewSeats === false; else elsePart">View Seats</span>
         <ng-template #elsePart><span>Hide Seats</span></ng-template>
     </div>
 
-    <!-- Seats Section -->
-
     <div class="container" *ngIf="viewSeats">
-        <hr />
+        <hr class="hr-divider" />
         <div class="d-flex">
             <app-bus-seats class="col-6"></app-bus-seats>
             <app-bus-seat-price class="col-6"></app-bus-seat-price>

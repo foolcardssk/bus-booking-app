@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTableModule } from '@angular/material/table';
 
 const materialModule = [
   MatButtonModule,
@@ -18,7 +19,8 @@ const materialModule = [
   MatListModule,
   MatSnackBarModule,
   MatAutocompleteModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatTableModule
 ];
 
 @NgModule({

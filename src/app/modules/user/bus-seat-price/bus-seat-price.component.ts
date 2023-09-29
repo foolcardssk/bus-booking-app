@@ -2,6 +2,7 @@ import { SeatBookingService } from 'src/app/services/seat-booking.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PickedSeats } from 'src/app/models/bus-data.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bus-seat-price',
@@ -11,16 +12,18 @@ import { PickedSeats } from 'src/app/models/bus-data.model';
 export class BusSeatPriceComponent implements OnInit, OnDestroy {
 
   seats: PickedSeats[];
+  busNo: string;
 
   selectedSeatSubscription: Subscription;
 
-  constructor(private seatBookingService: SeatBookingService) { }
+  constructor(private seatBookingService: SeatBookingService, private router: Router) { }
 
   ngOnInit(): void {
     this.selectedSeatSubscription = this.seatBookingService.selectedSeats
       .subscribe(
         seats => {
-          this.seats = seats;
+          this.seats = seats.seats;
+          this.busNo = seats.busNo;
         }
       )
   }
@@ -32,6 +35,11 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
     }
     return total;
   }
+
+  onContinueToDetailsPage() {
+    this.router.navigate(['/traveller/details']);
+  }
+
 
   ngOnDestroy(): void {
     this.selectedSeatSubscription.unsubscribe();

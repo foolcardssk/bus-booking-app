@@ -36,7 +36,7 @@ export class UserSignupComponent implements OnInit {
         this.db.addUserRole(uid, 'peasant')
           .then(() => {
             console.log('peasant role created !');
-            this.router.navigate(['/traveller']);
+            this.router.navigate(['/traveller/home']);
           })
           .catch(err=>{
             console.error('Error setting user role:', err);

@@ -1,5 +1,12 @@
 <div class="container">
-    <b> Selected Seats : </b>
+    <div class="d-flex">
+        <div class="flex-fill">
+            <b> Selected Seats : </b>
+        </div>
+        <div class="text-end flex-fill">
+            <i class="fa-solid fa-bus"> </i> {{ busNo }}
+        </div>
+    </div>
     <hr />
     <table class="table">
         <thead>
@@ -20,10 +27,13 @@
         </tbody>
     </table>
     <div *ngIf="seats.length > 0" class="text-center">
-        <br /><b>Total : </b> <i class="fa-solid fa-indian-rupee-sign"></i>
+        <br /><b>Total : </b>
+        <i class="fa-solid fa-indian-rupee-sign indian-rupee-icon"></i>
         {{ calculateTotal() }}
         <br />
         <br />
-        <button mat-stroked-button>Continue</button>
+        <button mat-stroked-button (click)="onContinueToDetailsPage()">
+            Continue
+        </button>
     </div>
 </div>
