@@ -1,5 +1,5 @@
-<div class="container" style="margin-top: -20px; margin-left: -20px">
-    <div class="legend mt-4 d-flex text-center">
+<div class="container" style="margin-top: -20px">
+    <div class="legend mt-4 d-flex text-center" style="margin-left: -40px">
         <div class="legend-item flex-fill">
             <div class="legend-color" style="background-color: lightblue"></div>
             <div class="legend-label">Male</div>
@@ -24,7 +24,8 @@
         Max. 5 seats reached !
     </div>
 
-    <div style="display: flex; margin-left: -25px">
+    <div style="display: flex; margin-left: -50px">
+        <!-- Lower Deck -->
         <svg width="320" height="430" [currentScale]="scale">
             <!-- Draw bus background -->
             <g transform="rotate(90, 200, 200)">
@@ -54,18 +55,22 @@
                                     [attr.x]="
                                         40 +
                                         i *
-                                            (seat.seatType === 'sleeper'
+                                            (seat.seatType.split('-')[0] ===
+                                            'sleeper'
                                                 ? 100
                                                 : 55)
                                     "
                                     [attr.y]="
-                                        seat.seatType === 'sleeper' &&
-                                        rowIndex === 2
+                                        seat.seatType.split('-')[0] ===
+                                            'sleeper' && rowIndex === 2
                                             ? 260
                                             : 100 + rowIndex * 40
                                     "
                                     [attr.width]="
-                                        seat.seatType === 'sleeper' ? 65 : 30
+                                        seat.seatType.split('-')[0] ===
+                                        'sleeper'
+                                            ? 65
+                                            : 30
                                     "
                                     height="30"
                                     rx="5"
@@ -73,7 +78,7 @@
                                     (click)="
                                         onUnbookedSeatClick(
                                             seat.seatNumber,
-                                            seat.seatType,
+                                            seat.seatType.split('-')[0],
                                             seat.price
                                         )
                                     "
@@ -86,13 +91,14 @@
                                     [attr.x]="
                                         55 +
                                         i *
-                                            (seat.seatType === 'sleeper'
+                                            (seat.seatType.split('-')[0] ===
+                                            'sleeper'
                                                 ? 100
                                                 : 55)
                                     "
                                     [attr.y]="
-                                        seat.seatType === 'sleeper' &&
-                                        rowIndex === 2
+                                        seat.seatType.split('-')[0] ===
+                                            'sleeper' && rowIndex === 2
                                             ? 280
                                             : 120 + rowIndex * 40
                                     "
@@ -111,18 +117,22 @@
                                     [attr.x]="
                                         40 +
                                         i *
-                                            (seat.seatType === 'sleeper'
+                                            (seat.seatType.split('-')[0] ===
+                                            'sleeper'
                                                 ? 100
-                                                : 55)
+                                                : 50)
                                     "
                                     [attr.y]="
-                                        seat.seatType === 'sleeper' &&
-                                        rowIndex === 2
+                                        seat.seatType.split('-')[0] ===
+                                            'sleeper' && rowIndex === 2
                                             ? 260
-                                            : 100 + rowIndex * 40
+                                            : 110 + rowIndex * 40
                                     "
                                     [attr.width]="
-                                        seat.seatType === 'sleeper' ? 65 : 30
+                                        seat.seatType.split('-')[0] ===
+                                        'sleeper'
+                                            ? 65
+                                            : 30
                                     "
                                     height="30"
                                     rx="5"
@@ -141,7 +151,7 @@
                 </g>
             </g>
         </svg>
-
+        <!-- Upper Deck -->
         <svg width="320" height="430" [currentScale]="scale">
             <!-- Draw bus background -->
             <g transform="rotate(90, 200, 200)">
@@ -171,18 +181,22 @@
                                     [attr.x]="
                                         40 +
                                         i *
-                                            (seat.seatType === 'sleeper'
+                                            (seat.seatType.split('-')[0] ===
+                                            'sleeper'
                                                 ? 100
                                                 : 50)
                                     "
                                     [attr.y]="
-                                        seat.seatType === 'sleeper' &&
-                                        rowIndex === 2
+                                        seat.seatType.split('-')[0] ===
+                                            'sleeper' && rowIndex === 2
                                             ? 260
                                             : 110 + rowIndex * 40
                                     "
                                     [attr.width]="
-                                        seat.seatType === 'sleeper' ? 65 : 30
+                                        seat.seatType.split('-')[0] ===
+                                        'sleeper'
+                                            ? 65
+                                            : 30
                                     "
                                     height="30"
                                     rx="5"
@@ -190,7 +204,7 @@
                                     (click)="
                                         onUnbookedSeatClick(
                                             seat.seatNumber,
-                                            seat.seatType,
+                                            seat.seatType.split('-')[0],
                                             seat.price
                                         )
                                     "
@@ -203,13 +217,14 @@
                                     [attr.x]="
                                         75 +
                                         i *
-                                            (seat.seatType === 'sleeper'
+                                            (seat.seatType.split('-')[0] ===
+                                            'sleeper'
                                                 ? 100
                                                 : 60)
                                     "
                                     [attr.y]="
-                                        seat.seatType === 'sleeper' &&
-                                        rowIndex === 2
+                                        seat.seatType.split('-')[0] ===
+                                            'sleeper' && rowIndex === 2
                                             ? 280
                                             : 125 + rowIndex * 40
                                     "
@@ -228,18 +243,22 @@
                                     [attr.x]="
                                         40 +
                                         i *
-                                            (seat.seatType === 'sleeper'
+                                            (seat.seatType.split('-')[0] ===
+                                            'sleeper'
                                                 ? 100
                                                 : 50)
                                     "
                                     [attr.y]="
-                                        seat.seatType === 'sleeper' &&
-                                        rowIndex === 2
+                                        seat.seatType.split('-')[0] ===
+                                            'sleeper' && rowIndex === 2
                                             ? 260
                                             : 110 + rowIndex * 40
                                     "
                                     [attr.width]="
-                                        seat.seatType === 'sleeper' ? 65 : 30
+                                        seat.seatType.split('-')[0] ===
+                                        'sleeper'
+                                            ? 65
+                                            : 30
                                     "
                                     height="30"
                                     rx="5"

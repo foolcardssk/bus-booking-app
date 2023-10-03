@@ -28,6 +28,7 @@ export interface Bus {
     lowerDeck: lowerDeck;
     upperDeck: UpperDeck;
     busNo: string;
+    availSeats: number;
 }
 
 export interface PickedSeats {

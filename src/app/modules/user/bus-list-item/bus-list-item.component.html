@@ -1,22 +1,22 @@
 <div class="container list-item">
     <div class="d-flex">
-        <div class="flex-fill text-start bus-info">
-            <b>Name : </b> My Bus
+        <div class="flex-fill text-start">
+            <b>Bus Name : </b> {{ bus.busName }}
             <br />
-            <b>No. </b> LNK03214
+            <b>Bus No : </b> {{ bus.busNo }}
         </div>
         <div class="flex-fill">
             <div>
-                <b>From : </b> My House
+                <b>From : </b> {{ bus.source }}
                 <br />
-                <b>to : </b> IDP
+                <b>to : </b> {{ bus.destination }}
             </div>
         </div>
         <div class="flex-fill text-end">
             <b>Avg. Price : </b>
-            <i class="fa-solid fa-indian-rupee-sign indian-rupee-icon"></i> 100
+            <i class="fa-solid fa-rupee-sign indian-rupee-icon"></i> 700 (S) - 1150 (SL)
             <br />
-            <b>Seats : </b> 32
+            <b>Free Seats : </b> {{ bus.availSeats }}
         </div>
         <hr class="hr-divider" />
     </div>
@@ -29,7 +29,7 @@
     <div class="container" *ngIf="viewSeats">
         <hr class="hr-divider" />
         <div class="d-flex">
-            <app-bus-seats class="col-6"></app-bus-seats>
+            <app-bus-seats class="col-6" [bus-seat]="bus"></app-bus-seats>
             <app-bus-seat-price class="col-6"></app-bus-seat-price>
         </div>
     </div>

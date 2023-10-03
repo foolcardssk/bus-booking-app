@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Bus, PickedSeats } from 'src/app/models/bus-data.model';
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
 
@@ -10,14 +10,14 @@ import { SeatBookingService } from 'src/app/services/seat-booking.service';
 export class BusSeatsComponent implements OnInit {
 
     scale: number = 0.8;
-    Bus: Bus;
+    @Input('bus-seat') Bus: Bus;
     pickedSeats: PickedSeats[] = [];
+
 
     constructor(private seatBookingService: SeatBookingService) { }
 
     ngOnInit(): void {
-        this.seatBookingService.initSeat();
-        this.Bus = this.seatBookingService.bus;
+
     }
 
     isSeatSelected(seatNo: string) {

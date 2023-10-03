@@ -1,4 +1,6 @@
 <div class="container bus-list">
-    <app-bus-list-item></app-bus-list-item>
-    <app-bus-list-item></app-bus-list-item>
+    <app-bus-list-item
+        *ngFor="let bus of buses"
+        [bus-item]="bus"
+    ></app-bus-list-item>
 </div>

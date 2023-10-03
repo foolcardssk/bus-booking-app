@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Bus, Seat } from '../models/bus-data.model';
-import { from, map, catchError } from 'rxjs';
+import { map, catchError } from 'rxjs';
 import { of } from 'rxjs';
 import * as md5 from 'md5';
 
@@ -27,6 +27,9 @@ export class BusManageService {
                 booked: false,
                 seatType,
                 seatNumber: `${row}${i}`,
+                name: '',
+                age: '',
+                gender: '',
             });
         }
 
@@ -46,7 +49,8 @@ export class BusManageService {
                 row3: this.generateSeats(5, 'sleeper-upper', 6),
             },
             busName: busName,
-            busNo: ''
+            busNo: '',
+            availSeats: 38
         };
     }
 
