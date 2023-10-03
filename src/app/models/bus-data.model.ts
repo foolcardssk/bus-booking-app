@@ -1,5 +1,5 @@
-interface Seat {
-    seatNumber: number;
+export interface Seat {
+    seatNumber: string;
     seatType: string;
     price: number;
     booked: boolean;

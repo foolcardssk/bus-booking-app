@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BusDataService } from 'src/app/services/bus-data.service';
+import { BusManageService } from 'src/app/services/bus-manage.service';
 
 @Component({
     selector: 'app-manage-bus',
@@ -10,7 +10,7 @@ import { BusDataService } from 'src/app/services/bus-data.service';
 export class ManageBusComponent implements OnInit, OnDestroy {
     busForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private busDataService: BusDataService) { }
+    constructor(private fb: FormBuilder, private busManageService: BusManageService) { }
 
     ngOnInit(): void {
         this.busForm = this.fb.group({
@@ -25,7 +25,7 @@ export class ManageBusComponent implements OnInit, OnDestroy {
             const source = this.busForm.get('source').value;
             const destination = this.busForm.get('destination').value;
             const busName = this.busForm.get('busName').value;
-            this.busDataService.createNewBus(source, destination, busName, 'L:18S-5SL U:0S-15SL');
+            this.busManageService.createNewBus(source, destination, busName, 'L:18S-5SL U:0S-15SL');
             this.busForm.reset();
             console.log('Form Submitted');
         } else {
