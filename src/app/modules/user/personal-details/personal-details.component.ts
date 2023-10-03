@@ -1,7 +1,7 @@
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PickedSeats } from 'src/app/models/bus-data.model';
+import { Seat } from 'src/app/models/bus-data.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,9 +12,10 @@ import { Router } from '@angular/router';
 })
 export class PersonalDetailsComponent implements OnInit, OnDestroy {
 
-    selectedSeats: PickedSeats[];
+    selectedSeats: Seat[];
     busNo: string;
     selectedSeatSubscription: Subscription;
+    selectedSeatBookingSubscription: Subscription;
     personalDetailForms: FormGroup[] = [];
 
     constructor(
@@ -38,9 +39,9 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
         this.selectedSeatSubscription.unsubscribe();
     }
 
-    private createSeatForm(seat: PickedSeats): FormGroup {
+    private createSeatForm(seat: Seat): FormGroup {
         return this.fb.group({
-            seatNo: [seat.seatNo],
+            seatNo: [seat.seatNumber],
             name: [,
                 [
                     Validators.required,
@@ -58,12 +59,26 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
-        this.personalDetailForms.forEach(
-            form => console.log(form.value)
-        );
+        this.personalDetailForms.forEach((form, index) => {
+            const seat = this.selectedSeats[index];
+
+            if (seat) {
+                seat.name = form.value.name;
+                seat.age = form.value.age;
+                seat.gender = form.value.gender;
+                seat.seatConstraint = false;
+            }
+        });
+
+        this.selectedSeatBookingSubscription = this.seatBookingService.bookUserSeats(this.busNo, this.selectedSeats)
+            .subscribe(() => {
+                console.log('Seats booked successfully');
+            });
+        // this.selectedSeatBookingSubscription.unsubscribe();
     }
 
     goToPreviousPage() {
         this.router.navigate(['/traveller/home']);
     }
+
 }

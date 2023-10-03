@@ -6,6 +6,7 @@ export interface Seat {
     name?: string;
     age?: number;
     gender?: string;
+    seatConstraint?: boolean;
 }
 
 interface lowerDeck {
@@ -29,11 +30,4 @@ export interface Bus {
     upperDeck: UpperDeck;
     busNo: string;
     availSeats: number;
-}
-
-export interface PickedSeats {
-    seatNo: string;
-    seatType: string;
-    seatPrice: number;
-    seatConstraint?: boolean;
 }

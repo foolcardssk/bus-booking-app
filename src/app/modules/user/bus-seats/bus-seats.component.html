@@ -42,7 +42,7 @@
                 <g id="seats" [attr.transform]="'translate(10, 0)'">
                     <ng-container
                         *ngFor="
-                            let row of Bus.lowerDeck | keyvalue;
+                            let row of bus.lowerDeck | keyvalue;
                             let rowIndex = index
                         "
                     >
@@ -78,7 +78,7 @@
                                     (click)="
                                         onUnbookedSeatClick(
                                             seat.seatNumber,
-                                            seat.seatType.split('-')[0],
+                                            seat.seatType,
                                             seat.price
                                         )
                                     "
@@ -120,13 +120,13 @@
                                             (seat.seatType.split('-')[0] ===
                                             'sleeper'
                                                 ? 100
-                                                : 50)
+                                                : 55)
                                     "
                                     [attr.y]="
                                         seat.seatType.split('-')[0] ===
                                             'sleeper' && rowIndex === 2
                                             ? 260
-                                            : 110 + rowIndex * 40
+                                            : 100 + rowIndex * 40
                                     "
                                     [attr.width]="
                                         seat.seatType.split('-')[0] ===
@@ -168,7 +168,7 @@
                 <g id="seats" [attr.transform]="'translate(10, 0)'">
                     <ng-container
                         *ngFor="
-                            let row of Bus.upperDeck | keyvalue;
+                            let row of bus.upperDeck | keyvalue;
                             let rowIndex = index
                         "
                     >
@@ -204,7 +204,7 @@
                                     (click)="
                                         onUnbookedSeatClick(
                                             seat.seatNumber,
-                                            seat.seatType.split('-')[0],
+                                            seat.seatType,
                                             seat.price
                                         )
                                     "
@@ -252,7 +252,7 @@
                                         seat.seatType.split('-')[0] ===
                                             'sleeper' && rowIndex === 2
                                             ? 260
-                                            : 110 + rowIndex * 40
+                                            : 100 + rowIndex * 40
                                     "
                                     [attr.width]="
                                         seat.seatType.split('-')[0] ===

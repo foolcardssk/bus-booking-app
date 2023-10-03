@@ -1,7 +1,7 @@
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PickedSeats } from 'src/app/models/bus-data.model';
+import { Seat } from 'src/app/models/bus-data.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class BusSeatPriceComponent implements OnInit, OnDestroy {
 
-  seats: PickedSeats[];
+  seats: Seat[];
   busNo: string;
 
   selectedSeatSubscription: Subscription;
@@ -31,7 +31,7 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
   calculateTotal() {
     let total: number = 0;
     for (let seat of this.seats) {
-      total += seat.seatPrice;
+      total += seat.price;
     }
     return total;
   }

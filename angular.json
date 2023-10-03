@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+                "md5"
+            ],
             "outputPath": "dist/bus-booking-app",
             "index": "src/index.html",
             "main": "src/main.ts",

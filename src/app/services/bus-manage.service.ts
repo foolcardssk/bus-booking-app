@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Bus, Seat } from '../models/bus-data.model';
-import { map, catchError } from 'rxjs';
+import { map, catchError, switchMap, Observable, from, tap, throwError } from 'rxjs';
 import { of } from 'rxjs';
 import * as md5 from 'md5';
 
@@ -26,10 +26,11 @@ export class BusManageService {
                 price,
                 booked: false,
                 seatType,
-                seatNumber: `${row}${i}`,
+                seatNumber: `R${row}${i}`,
                 name: '',
                 age: '',
                 gender: '',
+                seatConstraint: false
             });
         }
 
@@ -59,6 +60,50 @@ export class BusManageService {
 
         return this.firestore.collection('Buses').doc(busId).set(bus);
     }
+
+    bookSeats(busNo: string, selectedSeats: Seat[]): Observable<void> {
+        return this.firestore
+            .collection('Buses')
+            .doc(busNo)
+            .get()
+            .pipe(
+                switchMap(doc => {
+                    if (doc.exists) {
+                        const bus: Bus = doc.data() as Bus;
+                        selectedSeats.forEach((selectedSeat) => {
+                            const seat = this.findSeat(bus, selectedSeat.seatNumber);
+                            if (seat) {
+                                seat.booked = true;
+                                seat.name = selectedSeat.name;
+                                seat.age = selectedSeat.age;
+                                seat.gender = selectedSeat.gender;
+                                seat.seatConstraint = selectedSeat.seatConstraint;
+                            }
+                        });
+
+                        console.log('Updated Bus Data:', bus); // Log the updated bus data
+
+                        return from(
+                            this.firestore
+                                .collection('Buses')
+                                .doc(busNo)
+                                .set(bus)
+                        ).pipe(
+                            tap(() => console.log('Seats booked successfully')),
+                            catchError((error) => {
+                                console.error('Error booking seats:', error);
+                                return throwError(error);
+                            })
+                        );
+                    } else {
+                        console.error('Bus not found with the given bus number:', busNo);
+                        return throwError('Bus not found');
+                    }
+                })
+            );
+    }
+
+
 
     createNewBus(source: string, destination: string, busName: string, model: string): void {
         const newBus: Bus = {
