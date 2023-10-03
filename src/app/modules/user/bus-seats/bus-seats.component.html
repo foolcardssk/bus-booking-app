@@ -24,7 +24,7 @@
         Max. 5 seats reached !
     </div>
 
-    <div style="display: flex; margin-left: -25px;">
+    <div style="display: flex; margin-left: -25px">
         <svg width="320" height="430" [currentScale]="scale">
             <!-- Draw bus background -->
             <g transform="rotate(90, 200, 200)">
@@ -41,7 +41,7 @@
                 <g id="seats" [attr.transform]="'translate(10, 0)'">
                     <ng-container
                         *ngFor="
-                            let row of busLayout.lowerDeck | keyvalue;
+                            let row of Bus.lowerDeck | keyvalue;
                             let rowIndex = index
                         "
                     >
@@ -158,7 +158,7 @@
                 <g id="seats" [attr.transform]="'translate(10, 0)'">
                     <ng-container
                         *ngFor="
-                            let row of busLayout.upperDeck | keyvalue;
+                            let row of Bus.upperDeck | keyvalue;
                             let rowIndex = index
                         "
                     >

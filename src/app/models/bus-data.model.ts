@@ -20,10 +20,13 @@ interface UpperDeck {
     row3: Seat[];
 }
 
-export interface BusLayout {
+export interface Bus {
+    source?: string;
+    destination?: string;
+    busName: string;
+    model?: string;
     lowerDeck: lowerDeck;
     upperDeck: UpperDeck;
-    busName: string;
     busNo: string;
 }
 

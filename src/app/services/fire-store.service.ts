@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserRole } from '../models/firestore-data.model';
 
 @Injectable({

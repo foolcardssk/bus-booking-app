@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BusLayout, PickedSeats } from '../models/bus-data.model';
+import { Bus, PickedSeats } from '../models/bus-data.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeatBookingService {
 
-  bus: BusLayout;
+  bus: Bus;
   selectedSeats = new BehaviorSubject<{ seats: PickedSeats[], busNo: string }>({ seats: [], busNo: '' });
 
   constructor() { }

@@ -7,6 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { AdminBaseLayoutComponent } from './admin-base-layout/admin-base-layout.component';
 import { ManageBusComponent } from './manage-bus/manage-bus.component';
 import { BookingLogsComponent } from './booking-logs/booking-logs.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,9 @@ import { BookingLogsComponent } from './booking-logs/booking-logs.component';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class AdminModule { }

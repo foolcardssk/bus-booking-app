@@ -1,7 +1,7 @@
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { BusLayout, PickedSeats } from 'src/app/models/bus-data.model';
+import { Bus, PickedSeats } from 'src/app/models/bus-data.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class PersonalDetailsComponent implements OnInit, OnDestroy {
 
-  bus: BusLayout;
+  bus: Bus;
   selectedSeats: PickedSeats[];
   busNo: string;
   selectedSeatSubscription: Subscription;
