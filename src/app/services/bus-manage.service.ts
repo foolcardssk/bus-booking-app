@@ -61,7 +61,7 @@ export class BusManageService {
         return this.firestore.collection('Buses').doc(busId).set(bus);
     }
 
-    bookSeats(busNo: string, selectedSeats: Seat[]): Observable<void> {
+    bookSeats(busNo: string, selectedSeats: Seat[]) {
         return this.firestore
             .collection('Buses')
             .doc(busNo)
@@ -77,30 +77,46 @@ export class BusManageService {
                                 seat.name = selectedSeat.name;
                                 seat.age = selectedSeat.age;
                                 seat.gender = selectedSeat.gender;
-                                seat.seatConstraint = selectedSeat.seatConstraint;
+                                if (seat.gender === 'female' && [1, 2, 4, 5].includes(+seat.seatNumber.charAt(1))) {
+                                    const adjacentSeat = this.findAdjacentSeat(bus, seat);
+                                    if (adjacentSeat) {
+                                        adjacentSeat.seatConstraint = true;
+                                    }
+                                }
                             }
                         });
 
-                        console.log('Updated Bus Data:', bus); // Log the updated bus data
-
-                        return from(
-                            this.firestore
-                                .collection('Buses')
-                                .doc(busNo)
-                                .set(bus)
-                        ).pipe(
-                            tap(() => console.log('Seats booked successfully')),
-                            catchError((error) => {
-                                console.error('Error booking seats:', error);
-                                return throwError(error);
-                            })
-                        );
+                        return this.firestore
+                            .collection('Buses')
+                            .doc(busNo)
+                            .set(bus)
+                            .then(() => console.log('Seats booked successfully'))
+                            .catch((error) =>
+                                console.error('Error booking seats:', error)
+                            );
                     } else {
                         console.error('Bus not found with the given bus number:', busNo);
-                        return throwError('Bus not found');
+                        return Promise.reject('Bus not found');
                     }
                 })
             );
+    }
+
+    findAdjacentSeat(bus: Bus, seat: Seat): Seat | undefined {
+        const { row, col } = this.getSeatRowAndCol(seat.seatNumber);
+        const adjacentRow = row === 1 ? 2 : row === 2 ? 1 : row === 4 ? 5 : row === 5 ? 4 : 0;
+        if (adjacentRow > 0) {
+            return this.findSeat(bus, `R${adjacentRow}${col}`);
+        }
+        return undefined;
+    }
+
+    getSeatRowAndCol(seatNumber: string): { row: number; col: number } {
+        const match = seatNumber.match(/R(\d+)(\d+)/);
+        if (match) {
+            return { row: +match[1], col: +match[2] };
+        }
+        return { row: 0, col: 0 };
     }
 
 

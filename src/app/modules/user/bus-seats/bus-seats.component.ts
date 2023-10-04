@@ -30,7 +30,7 @@ export class BusSeatsComponent implements OnInit {
     }
 
 
-    onUnbookedSeatClick(seatNo: string, seatType: string, seatPrice: number) {
+    onUnbookedSeatClick(seatNo: string, seatType: string, seatPrice: number, seatConstraint: boolean) {
         for (let seat of this.pickedSeats) {
             if (seat.seatNumber === seatNo) {
                 this.pickedSeats.splice(this.pickedSeats.indexOf(seat), 1);
@@ -42,7 +42,8 @@ export class BusSeatsComponent implements OnInit {
                 seatNumber: seatNo,
                 seatType: seatType,
                 price: seatPrice,
-                booked: false
+                booked: false,
+                seatConstraint: seatConstraint
             });
         }
         this.seatBookingService.selectedSeats.next({

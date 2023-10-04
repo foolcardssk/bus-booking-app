@@ -58,6 +58,15 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
         });
     }
 
+    hasSeatConstraint(seatNo: string): boolean {
+        const seat = this.selectedSeats.find(seat => seat.seatNumber === seatNo);
+        return seat.seatConstraint;
+    }
+
+    areAllFormsValid(): boolean {
+        return this.personalDetailForms.every(form => form.valid);
+    }
+
     onSubmit(): void {
         this.personalDetailForms.forEach((form, index) => {
             const seat = this.selectedSeats[index];
