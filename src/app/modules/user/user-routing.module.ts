@@ -4,6 +4,7 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 import { PersonalDetailsComponent } from './personal-details/personal-details.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
+import { BookingSummaryComponent } from './booking-summary/booking-summary.component';
 
 const routes: Routes = [
     {
@@ -12,6 +13,7 @@ const routes: Routes = [
         children: [
             { path: 'home', component: UserHomeComponent },
             { path: 'details', component: PersonalDetailsComponent },
+            { path: 'booking-summary', component: BookingSummaryComponent },
             { path: '', redirectTo: '/traveller/home', pathMatch: 'full' }
         ]
     },

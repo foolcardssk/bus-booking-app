@@ -1,0 +1,46 @@
+<!-- booking-summary.component.html -->
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Booking Summary</h2>
+
+    <div *ngIf="bookingData && bookingData.length > 0">
+        <p><strong>Bus Number: </strong>{{ busNo }}</p>
+
+        <div class="row">
+            <div *ngFor="let seat of bookingData" class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Seat {{ seat.seatNumber }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Passenger Name: </strong>{{ seat.name }}</p>
+                        <p><strong>Age: </strong>{{ seat.age }}</p>
+                        <p><strong>Gender: </strong>{{ seat.gender }}</p>
+                        <p><strong>Seat Type: </strong>{{ seat.seatType }}</p>
+                        <p><strong>Seat Price: </strong>{{ seat.price }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button (click)="onCancel()" mat-stroked-button>Cancel</button>
+            <button
+                *ngIf="bookingData.length > 0"
+                (click)="proceedToPayment()"
+                mat-stroked-button
+                color="primary"
+            >
+                Proceed
+            </button>
+        </div>
+    </div>
+
+    <div
+        *ngIf="!bookingData || bookingData.length === 0"
+        class="text-center mt-4"
+    >
+        <p>No booking data available.</p>
+        <button (click)="goToPreviousPage()" mat-button>Go Back</button>
+    </div>
+</div>

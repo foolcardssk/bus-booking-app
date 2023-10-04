@@ -15,7 +15,6 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
     selectedSeats: Seat[];
     busNo: string;
     selectedSeatSubscription: Subscription;
-    selectedSeatBookingSubscription: Subscription;
     personalDetailForms: FormGroup[] = [];
 
     constructor(
@@ -74,14 +73,21 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
                 seat.name = form.value.name;
                 seat.age = form.value.age;
                 seat.gender = form.value.gender;
-                seat.seatConstraint = false;
             }
         });
 
-        this.selectedSeatBookingSubscription = this.seatBookingService.bookUserSeats(this.busNo, this.selectedSeats)
-            .subscribe(() => {
-                console.log('Seats booked successfully');
-            });
+        this.seatBookingService.seatsToBeBooked.next({
+            busNo: this.busNo,
+            seats: this.selectedSeats
+        })
+
+        console.log(this.busNo, this.selectedSeats)
+        this.router.navigate(['/traveller/booking-summary']);
+
+        // this.selectedSeatBookingSubscription = this.seatBookingService.bookUserSeats(this.busNo, this.selectedSeats)
+        //     .subscribe(() => {
+        //         console.log('Seats booked successfully');
+        //     });
         // this.selectedSeatBookingSubscription.unsubscribe();
     }
 

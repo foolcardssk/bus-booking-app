@@ -12,6 +12,7 @@ import { BusSeatsComponent } from './bus-seats/bus-seats.component';
 import { BusSeatPriceComponent } from './bus-seat-price/bus-seat-price.component';
 import { PersonalDetailsComponent } from './personal-details/personal-details.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
+import { BookingSummaryComponent } from './booking-summary/booking-summary.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { BaseLayoutComponent } from './base-layout/base-layout.component';
     BusSeatsComponent,
     BusSeatPriceComponent,
     PersonalDetailsComponent,
-    BaseLayoutComponent
+    BaseLayoutComponent,
+    BookingSummaryComponent
   ],
   imports: [
     CommonModule,
