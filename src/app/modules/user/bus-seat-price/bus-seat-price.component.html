@@ -20,9 +20,9 @@
         <tbody>
             <tr *ngFor="let seat of seats; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ seat.seatNo }}</td>
+                <td>{{ seat.seatNumber }}</td>
                 <td>{{ seat.seatType }}</td>
-                <td>{{ seat.seatPrice }}</td>
+                <td>{{ seat.price }}</td>
             </tr>
         </tbody>
     </table>

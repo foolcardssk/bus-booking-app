@@ -78,7 +78,7 @@
                                     (click)="
                                         onUnbookedSeatClick(
                                             seat.seatNumber,
-                                            seat.seatType,
+                                            seat.seatType.split('-')[0],
                                             seat.price
                                         )
                                     "
@@ -204,7 +204,7 @@
                                     (click)="
                                         onUnbookedSeatClick(
                                             seat.seatNumber,
-                                            seat.seatType,
+                                            seat.seatType.split('-')[0],
                                             seat.price
                                         )
                                     "
