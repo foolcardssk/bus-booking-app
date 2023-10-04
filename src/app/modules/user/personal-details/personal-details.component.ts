@@ -40,6 +40,7 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
     }
 
     private createSeatForm(seat: Seat): FormGroup {
+        const defaultGender = seat.seatConstraint ? 'female' : 'male';
         return this.fb.group({
             seatNo: [seat.seatNumber],
             name: [,
@@ -52,9 +53,7 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
             age: [,
                 [Validators.required, Validators.min(5)]
             ],
-            gender: [,
-                [Validators.required]
-            ],
+            gender: [defaultGender, [Validators.required]],
         });
     }
 
