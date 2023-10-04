@@ -17,6 +17,8 @@ export class ManageBusComponent implements OnInit, OnDestroy {
             source: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s,]+$/)]],
             destination: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s,]+$/)]],
             busName: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+            departureTime: ['', [Validators.required]],
+            arrivalTime: ['', [Validators.required]]
         });
     }
 
@@ -25,7 +27,9 @@ export class ManageBusComponent implements OnInit, OnDestroy {
             const source = this.busForm.get('source').value;
             const destination = this.busForm.get('destination').value;
             const busName = this.busForm.get('busName').value;
-            this.busManageService.createNewBus(source, destination, busName, 'L:18S-5SL U:0S-15SL');
+            const departureTime = this.busForm.get('departureTime').value;
+            const arrivalTime = this.busForm.get('arrivalTime').value;
+            this.busManageService.createNewBus(source, destination, busName, 'L:18S-5SL U:0S-15SL', departureTime, arrivalTime);
             this.busForm.reset();
             console.log('Form Submitted');
         } else {

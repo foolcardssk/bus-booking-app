@@ -5,6 +5,7 @@
             <br />
             <b>Bus No : </b> {{ bus.busNo }}
         </div>
+
         <div class="flex-fill">
             <div>
                 <b>From : </b> {{ bus.source }}
@@ -12,9 +13,19 @@
                 <b>to : </b> {{ bus.destination }}
             </div>
         </div>
+
+        <div class="flex-fill">
+            <div>
+                <b>Departure Time : </b> {{ bus.departureTime }}
+                <br />
+                <b>Arrival Time : </b> {{ bus.arrivalTime }}
+            </div>
+        </div>
+
         <div class="flex-fill text-end">
             <b>Avg. Price : </b>
-            <i class="fa-solid fa-rupee-sign indian-rupee-icon"></i> 700 (S) - 1150 (SL)
+            <i class="fa-solid fa-rupee-sign indian-rupee-icon"></i> 700 (S) -
+            1150 (SL)
             <br />
             <b>Free Seats : </b> {{ bus.availSeats }}
         </div>

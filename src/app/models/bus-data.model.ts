@@ -22,6 +22,8 @@ interface UpperDeck {
 }
 
 export interface Bus {
+    departureTime?: string;
+    arrivalTime?: string;
     source?: string;
     destination?: string;
     busName: string;

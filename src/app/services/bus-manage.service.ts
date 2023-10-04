@@ -121,8 +121,10 @@ export class BusManageService {
 
 
 
-    createNewBus(source: string, destination: string, busName: string, model: string): void {
+    createNewBus(source: string, destination: string, busName: string, model: string, departureTime: string, arrivalTime: string): void {
         const newBus: Bus = {
+            departureTime,
+            arrivalTime,
             source,
             destination,
             model,
