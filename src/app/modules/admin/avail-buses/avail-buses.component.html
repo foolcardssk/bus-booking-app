@@ -9,24 +9,25 @@
                 <button mat-stroked-button class="me-2" (click)="editBus(bus)">
                     Edit
                 </button>
-                <button mat-stroked-button class="me-2" (click)="deleteBus(bus)">
+                <button
+                    mat-stroked-button
+                    class="me-2"
+                    (click)="deleteBus(bus)"
+                >
                     Delete
                 </button>
             </div>
         </div>
-        <div class="card-body">
+        <div
+            class="card-body"
+            *ngIf="!showEditForm || (showEditForm && bus === selectedBus)"
+        >
+            <p class="card-text"><b>Bus No:</b> {{ bus.busNo }}</p>
+
             <div class="d-flex justify-content-between align-items-center">
                 <div class="flex-fill text-start">
-                    <p class="card-text"><b>Bus No:</b> {{ bus.busNo }}</p>
-                </div>
-
-                <div class="flex-fill">
-                    <div>
-                        <p class="card-text"><b>From:</b> {{ bus.source }}</p>
-                        <p class="card-text">
-                            <b>To:</b> {{ bus.destination }}
-                        </p>
-                    </div>
+                    <p class="card-text"><b>From:</b> {{ bus.source }}</p>
+                    <p class="card-text"><b>To:</b> {{ bus.destination }}</p>
                 </div>
 
                 <div class="flex-fill">
@@ -42,13 +43,62 @@
 
                 <div class="flex-fill text-end">
                     <p class="card-text">
-                        <b>Avg. Price:</b>
-                        700 (S) - 1150 (SL)
+                        <b>Avg. Price:</b> 700 (S) - 1150 (SL)
                     </p>
                     <p class="card-text">
                         <b>Free Seats:</b> {{ bus.availSeats }}
                     </p>
                 </div>
+            </div>
+
+            <!-- Edit Form -->
+            <div *ngIf="showEditForm && bus === selectedBus">
+                <br />
+                <hr />
+                <form [formGroup]="editForm">
+                    <div class="mb-3">
+                        <label for="departureTime" class="form-label"
+                            >Departure Time:</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="departureTime"
+                            formControlName="departureTime"
+                        />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="arrivalTime" class="form-label"
+                            >Arrival Time:</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="arrivalTime"
+                            formControlName="arrivalTime"
+                        />
+                    </div>
+
+                    <div class="mb-3">
+                        <button
+                            mat-stroked-button
+                            type="button"
+                            class="me-2"
+                            (click)="saveChanges()"
+                        >
+                            Save Changes
+                        </button>
+                        <button
+                            mat-stroked-button
+                            type="button"
+                            class="me-2"
+                            (click)="cancel()"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
