@@ -33,3 +33,18 @@ export interface Bus {
     busNo: string;
     availSeats: number;
 }
+
+export interface SeatLog{
+    seatNumber: string;
+    name?: string;
+    age?: number;
+    gender?: string;
+    seatConstraint?: boolean;
+}
+
+export interface BookingLog{
+    status: 'booked' | 'canceled';
+    uid: string;
+    busNo: string;
+    bookedSeats: SeatLog[];
+}

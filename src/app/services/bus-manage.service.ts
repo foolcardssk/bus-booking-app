@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Bus, Seat } from '../models/bus-data.model';
-import { map, catchError, switchMap, Observable, from, tap, throwError } from 'rxjs';
+import { Bus, Seat, BookingLog, SeatLog } from '../models/bus-data.model';
+import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as md5 from 'md5';
 
@@ -28,10 +28,10 @@ export class BusManageService {
                 seatType,
                 seatNumber: `R${row}${i}`,
                 name: '',
-                age: '',
+                age: null,
                 gender: '',
                 seatConstraint: false
-            });
+            } as Seat);
         }
 
         return seats;
@@ -57,11 +57,34 @@ export class BusManageService {
 
     private pushBusToFirestore(bus: Bus): Promise<void> {
         const busId = bus.busNo;
-
         return this.firestore.collection('Buses').doc(busId).set(bus);
     }
 
-    bookSeats(busNo: string, selectedSeats: Seat[]) {
+    private generateTimestamp(): string {
+        return new Date().toISOString();
+    }
+
+    private createLogEntry(uid: string, busNo: string, bookedSeats: Seat[]): Promise<void> {
+        const timestamp = this.generateTimestamp();
+        const seatLogs: SeatLog[] = bookedSeats.map(seat => ({
+            seatNumber: seat.seatNumber,
+            name: seat.name,
+            age: seat.age,
+            gender: seat.gender,
+            seatConstraint: seat.seatConstraint
+        }));
+
+        const logEntry: BookingLog = {
+            status: 'booked',
+            uid,
+            busNo,
+            bookedSeats: seatLogs,
+        };
+
+        return this.firestore.collection('bookingLogs').doc(timestamp).set(logEntry);
+    }
+
+    bookSeats(busNo: string, selectedSeats: Seat[], uid: string) {
         return this.firestore
             .collection('Buses')
             .doc(busNo)
@@ -70,6 +93,8 @@ export class BusManageService {
                 switchMap(doc => {
                     if (doc.exists) {
                         const bus: Bus = doc.data() as Bus;
+                        const bookedSeatsCount = selectedSeats.length;
+
                         selectedSeats.forEach((selectedSeat) => {
                             const seat = this.findSeat(bus, selectedSeat.seatNumber);
                             if (seat) {
@@ -86,21 +111,21 @@ export class BusManageService {
                             }
                         });
 
-                        return this.firestore
-                            .collection('Buses')
-                            .doc(busNo)
-                            .set(bus)
+                        bus.availSeats -= bookedSeatsCount;
+
+                        // Create a log entry
+                        return this.createLogEntry(uid, busNo, selectedSeats)
+                            .then(() => this.firestore.collection('Buses').doc(busNo).set(bus))
                             .then(() => console.log('Seats booked successfully'))
-                            .catch((error) =>
-                                console.error('Error booking seats:', error)
-                            );
+                            .catch((error) => console.error('Error booking seats:', error));
                     } else {
                         console.error('Bus not found with the given bus number:', busNo);
-                        return Promise.reject('Bus not found');
+                        return of(null);
                     }
                 })
             );
     }
+
 
     findAdjacentSeat(bus: Bus, seat: Seat): Seat | undefined {
         const { row, col } = this.getSeatRowAndCol(seat.seatNumber);
@@ -119,8 +144,6 @@ export class BusManageService {
         return { row: 0, col: 0 };
     }
 
-
-
     createNewBus(source: string, destination: string, busName: string, model: string, departureTime: string, arrivalTime: string): void {
         const newBus: Bus = {
             departureTime,
@@ -134,7 +157,7 @@ export class BusManageService {
 
         this.pushBusToFirestore(newBus)
             .catch(error => console.error('Error adding bus to Firestore:', error));
-    };
+    }
 
     private findSeat(bus: Bus, seatNumber: string): Seat | undefined {
         const allSeats = [
@@ -147,34 +170,5 @@ export class BusManageService {
         ];
 
         return allSeats.find(seat => seat.seatNumber === seatNumber);
-    }
-
-    cancelSeat(busNo: string, seatNumber: string) {
-        return this.firestore.collection('Buses').doc(busNo).get()
-            .pipe(
-                map(doc => {
-                    if (doc.exists) {
-                        const bus: Bus = doc.data() as Bus;
-                        const seat = this.findSeat(bus, seatNumber);
-                        if (seat) {
-                            seat.booked = false;
-                            seat.name = '';
-                            seat.age = null;
-                            seat.gender = '';
-                            return this.pushBusToFirestore(bus);
-                        } else {
-                            console.error('Seat not found with the given seat number:', seatNumber);
-                            return of(null);
-                        }
-                    } else {
-                        console.error('Bus not found with the given bus number:', busNo);
-                        return of(null);
-                    }
-                }),
-                catchError(err => {
-                    console.error('Error retrieving bus data:', err);
-                    return of(null);
-                })
-            );
     }
 }
