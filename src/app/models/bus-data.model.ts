@@ -43,7 +43,7 @@ export interface SeatLog{
 }
 
 export interface BookingLog{
-    status: 'booked' | 'canceled';
+    status: string;
     uid: string;
     busNo: string;
     bookedSeats: SeatLog[];

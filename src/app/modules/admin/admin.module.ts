@@ -11,18 +11,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [
-    AdminHomeComponent,
-    AdminBaseLayoutComponent,
-    ManageBusComponent,
-    BookingLogsComponent
-  ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    FormsModule
-  ]
+    declarations: [
+        AdminHomeComponent,
+        AdminBaseLayoutComponent,
+        ManageBusComponent,
+        BookingLogsComponent,
+    ],
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        FormsModule
+    ]
 })
 export class AdminModule { }

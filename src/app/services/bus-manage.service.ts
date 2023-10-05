@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Bus, Seat, BookingLog, SeatLog } from '../models/bus-data.model';
 import { switchMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import * as md5 from 'md5';
 
 @Injectable({
@@ -142,6 +142,10 @@ export class BusManageService {
             return { row: +match[1], col: +match[2] };
         }
         return { row: 0, col: 0 };
+    }
+
+    getAllBookingLogs(): Observable<BookingLog[]> {
+        return this.firestore.collection<BookingLog>('bookingLogs').valueChanges();
     }
 
     createNewBus(source: string, destination: string, busName: string, model: string, departureTime: string, arrivalTime: string): void {

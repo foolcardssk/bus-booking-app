@@ -1,1 +1,45 @@
-<p>booking-logs works!</p>
+<div
+    class="container"
+    style="margin-top: 50px"
+    *ngIf="bookingLogs.length > 0; else noLogs"
+>
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let log of bookingLogs">
+            <button
+                mat-stroked-button
+                class="float-end"
+                (click)="cancelBooking(log)"
+            >
+                Cancel Booking
+            </button>
+            <h5><strong>Status : </strong> {{ log.status }}</h5>
+            <p><strong>User ID : </strong> {{ log.uid }}</p>
+            <p><strong>Bus Number : </strong> {{ log.busNo }}</p>
+            <h6><strong>Booked Seats : </strong></h6>
+            <ul class="list-group">
+                <li
+                    class="list-group-item"
+                    *ngFor="let seat of log.bookedSeats"
+                    style="
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                    "
+                >
+                    <p><strong>Seat Number : </strong> {{ seat.seatNumber }}</p>
+                    <p><strong>Name : </strong> {{ seat.name }}</p>
+                    <p><strong>Age : </strong> {{ seat.age }}</p>
+                    <p><strong>Gender : </strong> {{ seat.gender }}</p>
+                    <p>
+                        <strong>Seat Constraint : </strong>
+                        {{ seat.seatConstraint }}
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<ng-template #noLogs>
+    <p class="mt-4"><strong>No booking logs available.</strong></p>
+</ng-template>
