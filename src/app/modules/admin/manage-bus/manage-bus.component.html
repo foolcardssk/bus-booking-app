@@ -1,83 +1,27 @@
-<div class="container">
-    <div class="text-center mt-4">
-        <h4>Fill out form to Create new Bus</h4>
-    </div>
-    <div class="container" style="margin-top: 50px">
-        <form [formGroup]="busForm" (ngSubmit)="onSubmit()" class="row g-3">
-            <!-- Source -->
-            <div class="col-md-12 text-center">
-                <mat-form-field appearance="outline" class="w-50">
-                    <mat-label>Source</mat-label>
-                    <input
-                        matInput
-                        formControlName="source"
-                        placeholder="Starting Point"
-                    />
-                    <mat-hint>Enter the starting point</mat-hint>
-                </mat-form-field>
-            </div>
+<div class="container mt-3">
+    <ul class="nav nav-tabs">
+        <li
+            class="nav-item"
+            (click)="selectTab('avail-buses')"
+            [class.active]="selectedTab === 'avail-buses'"
+        >
+            <a class="nav-link">Available Buses</a>
+        </li>
+        <li
+            class="nav-item"
+            (click)="selectTab('add-bus')"
+            [class.active]="selectedTab === 'add-bus'"
+        >
+            <a class="nav-link">Add Bus</a>
+        </li>
+    </ul>
 
-            <!-- Destination -->
-            <div class="col-md-12 text-center">
-                <mat-form-field appearance="outline" class="w-50">
-                    <mat-label>Destination</mat-label>
-                    <input
-                        matInput
-                        formControlName="destination"
-                        placeholder="Destination"
-                    />
-                    <mat-hint>Enter the final drop point</mat-hint>
-                </mat-form-field>
-            </div>
-
-            <!-- Bus Name -->
-            <div class="col-md-12 text-center">
-                <mat-form-field appearance="outline" class="w-50">
-                    <mat-label>Bus Name</mat-label>
-                    <input
-                        matInput
-                        formControlName="busName"
-                        placeholder="Bus Name"
-                    />
-                </mat-form-field>
-            </div>
-
-            <!-- Departure Time -->
-            <div class="col-md-12 text-center">
-                <mat-form-field appearance="outline" class="w-50">
-                    <mat-label>Departure Time</mat-label>
-                    <input
-                        matInput
-                        formControlName="departureTime"
-                        placeholder="Starting Time"
-                    />
-                </mat-form-field>
-            </div>
-
-            <!-- Arrival Time -->
-            <div class="col-md-12 text-center">
-                <mat-form-field appearance="outline" class="w-50">
-                    <mat-label>Arrival Time</mat-label>
-                    <input
-                        matInput
-                        formControlName="arrivalTime"
-                        placeholder="Destination reach Time"
-                    />
-                </mat-form-field>
-            </div>
-
-            <div class="container mt-4 mb-4 text-center">
-                Only One Bus Model is Available So far. It will be Selected as
-                the Default Model. <br />
-                <b>L:18S-5SL U:0S-15SL</b>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="text-center">
-                <button mat-raised-button color="primary" type="submit">
-                    Submit
-                </button>
-            </div>
-        </form>
+    <div class="tab-content mt-3">
+        <div *ngIf="selectedTab === 'add-bus'">
+            <app-add-bus></app-add-bus>
+        </div>
+        <div *ngIf="selectedTab === 'avail-buses'">
+            <app-avail-buses></app-avail-buses>
+        </div>
     </div>
 </div>

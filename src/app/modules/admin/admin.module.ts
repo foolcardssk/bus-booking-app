@@ -8,6 +8,9 @@ import { AdminBaseLayoutComponent } from './admin-base-layout/admin-base-layout.
 import { ManageBusComponent } from './manage-bus/manage-bus.component';
 import { BookingLogsComponent } from './booking-logs/booking-logs.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AvailBusesComponent } from './avail-buses/avail-buses.component';
+import { AddBusComponent } from './add-bus/add-bus.component';
+
 
 
 @NgModule({
@@ -16,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         AdminBaseLayoutComponent,
         ManageBusComponent,
         BookingLogsComponent,
+        AvailBusesComponent,
+        AddBusComponent,
     ],
     imports: [
         CommonModule,
