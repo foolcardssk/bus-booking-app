@@ -5,13 +5,15 @@
 >
     <ul class="list-group">
         <li class="list-group-item" *ngFor="let log of bookingLogs">
-            <button
-                mat-stroked-button
-                class="float-end"
-                (click)="cancelBooking(log)"
-            >
-                Cancel Booking
-            </button>
+            <ng-container *ngIf="log.status === 'booked'">
+                <button
+                    mat-stroked-button
+                    class="float-end"
+                    (click)="cancelBooking(log)"
+                >
+                    Cancel Booking
+                </button>
+            </ng-container>
             <h5><strong>Status : </strong> {{ log.status }}</h5>
             <p><strong>User ID : </strong> {{ log.uid }}</p>
             <p><strong>Bus Number : </strong> {{ log.busNo }}</p>
@@ -31,8 +33,8 @@
                     <p><strong>Age : </strong> {{ seat.age }}</p>
                     <p><strong>Gender : </strong> {{ seat.gender }}</p>
                     <p>
-                        <strong>Seat Constraint : </strong>
-                        {{ seat.seatConstraint }}
+                        <strong>Seat Constraint : </strong
+                        >{{ seat.seatConstraint }}
                     </p>
                 </li>
             </ul>

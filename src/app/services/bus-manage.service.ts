@@ -76,6 +76,7 @@ export class BusManageService {
 
         const logEntry: BookingLog = {
             status: 'booked',
+            timestamp: timestamp,
             uid,
             busNo,
             bookedSeats: seatLogs,
@@ -124,6 +125,55 @@ export class BusManageService {
                     }
                 })
             );
+    }
+
+    cancelBooking(log: BookingLog): Promise<void> {
+        return this.firestore
+            .collection('Buses')
+            .doc(log.busNo)
+            .get()
+            .toPromise()
+            .then((doc) => {
+                if (doc.exists) {
+                    const bus: Bus = doc.data() as Bus;
+
+                    log.bookedSeats.forEach((canceledSeat) => {
+                        const seat = this.findSeat(bus, canceledSeat.seatNumber);
+                        if (seat) {
+                            seat.booked = false;
+                            seat.name = '';
+                            seat.age = null;
+                            // seat.gender = '';
+
+                            if (
+                                seat.gender === 'female' &&
+                                [1, 2, 4, 5].includes(+seat.seatNumber.charAt(1))
+                            ) {
+                                seat.gender = '';
+                                const adjacentSeat = this.findAdjacentSeat(bus, seat);
+                                if (adjacentSeat) {
+                                    adjacentSeat.seatConstraint = false;
+                                }
+                            }
+                        }
+                    });
+
+                    bus.availSeats += log.bookedSeats.length;
+
+                    log.status = 'canceled';
+
+                    return this.firestore
+                        .collection('Buses')
+                        .doc(log.busNo)
+                        .set(bus)
+                        .then(() => this.firestore.collection('bookingLogs').doc(log.timestamp).update(log))
+                        .then(() => console.log('Booking canceled successfully'))
+                        .catch((error) => console.error('Error canceling booking:', error));
+                } else {
+                    console.error('Bus not found with the given bus number:', log.busNo);
+                    return Promise.reject('Bus not found');
+                }
+            });
     }
 
 

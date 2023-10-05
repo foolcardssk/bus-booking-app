@@ -44,6 +44,7 @@ export interface SeatLog{
 
 export interface BookingLog{
     status: string;
+    timestamp: string;
     uid: string;
     busNo: string;
     bookedSeats: SeatLog[];
