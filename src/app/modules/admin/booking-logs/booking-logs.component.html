@@ -3,8 +3,10 @@
     style="margin-top: 50px"
     *ngIf="bookingLogs.length > 0; else noLogs"
 >
-    <ul class="list-group">
-        <li class="list-group-item" *ngFor="let log of bookingLogs">
+    <h2 class="text-center mb-4">Booking Logs</h2>
+
+    <div class="card mb-4" *ngFor="let log of bookingLogs">
+        <div class="card-header">
             <ng-container *ngIf="log.status === 'booked'">
                 <button
                     mat-stroked-button
@@ -17,29 +19,37 @@
             <h5><strong>Status : </strong> {{ log.status }}</h5>
             <p><strong>User ID : </strong> {{ log.uid }}</p>
             <p><strong>Bus Number : </strong> {{ log.busNo }}</p>
+        </div>
+        <div class="card-body">
             <h6><strong>Booked Seats : </strong></h6>
             <ul class="list-group">
                 <li
                     class="list-group-item"
                     *ngFor="let seat of log.bookedSeats"
-                    style="
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: space-between;
-                    "
                 >
-                    <p><strong>Seat Number : </strong> {{ seat.seatNumber }}</p>
-                    <p><strong>Name : </strong> {{ seat.name }}</p>
-                    <p><strong>Age : </strong> {{ seat.age }}</p>
-                    <p><strong>Gender : </strong> {{ seat.gender }}</p>
-                    <p>
-                        <strong>Seat Constraint : </strong
-                        >{{ seat.seatConstraint }}
-                    </p>
+                    <div
+                        style="
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                        "
+                    >
+                        <p>
+                            <strong>Seat Number : </strong>
+                            {{ seat.seatNumber }}
+                        </p>
+                        <p><strong>Name : </strong> {{ seat.name }}</p>
+                        <p><strong>Age : </strong> {{ seat.age }}</p>
+                        <p><strong>Gender : </strong> {{ seat.gender }}</p>
+                        <p>
+                            <strong>Seat Constraint : </strong
+                            >{{ seat.seatConstraint }}
+                        </p>
+                    </div>
                 </li>
             </ul>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div>
 
 <ng-template #noLogs>
