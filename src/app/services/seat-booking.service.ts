@@ -21,4 +21,8 @@ export class SeatBookingService {
     bookUserSeats(busNo: string, selectedSeats: Seat[], uid: string){
         return this.busManageService.bookSeats(busNo, selectedSeats, uid);
     }
+
+    deleteBus(busNo: string){
+        return this.busManageService.deleteBus(busNo);
+    }
 }

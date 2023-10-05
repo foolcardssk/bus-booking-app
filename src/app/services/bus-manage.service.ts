@@ -85,6 +85,52 @@ export class BusManageService {
         return this.firestore.collection('bookingLogs').doc(timestamp).set(logEntry);
     }
 
+    editBusInfo(busNo: string, newDepartureTime: string, newArrivalTime: string): Promise<void> {
+        return this.firestore
+            .collection('Buses')
+            .doc(busNo)
+            .get()
+            .toPromise()
+            .then((doc) => {
+                if (doc.exists) {
+                    const bus: Bus = doc.data() as Bus;
+
+                    bus.departureTime = newDepartureTime;
+                    bus.arrivalTime = newArrivalTime;
+
+                    return this.firestore.collection('Buses').doc(busNo).set(bus)
+                        .then(() => console.log('Bus information updated successfully'))
+                        .catch((error) => console.error('Error updating bus information:', error));
+                } else {
+                    console.error('Bus not found with the given bus number:', busNo);
+                    return Promise.reject('Bus not found');
+                }
+            })
+            .catch((error) => console.error('Error getting bus document:', error));
+    }
+
+    deleteBus(busNo: string): Promise<void> {
+        return this.firestore
+            .collection('Buses')
+            .doc(busNo)
+            .get()
+            .toPromise()
+            .then((doc) => {
+                if (doc.exists) {
+                    return this.firestore.collection('Buses').doc(busNo).delete()
+                        .then(() => console.log('Bus deleted successfully'))
+                        .catch((error) => console.error('Error deleting bus:', error));
+                } else {
+                    console.error('Bus not found with the given bus number:', busNo);
+                    return Promise.reject('Bus not found');
+                }
+            })
+            .catch((error) => console.error('Error getting bus document:', error));
+    }
+
+
+
+
     bookSeats(busNo: string, selectedSeats: Seat[], uid: string) {
         return this.firestore
             .collection('Buses')
