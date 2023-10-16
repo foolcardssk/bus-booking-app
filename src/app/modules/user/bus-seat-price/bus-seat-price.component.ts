@@ -22,7 +22,6 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.selectedSeatSubscription = this.seatBookingService.selectedSeats
             .pipe(
-                tap(data => console.log('Received data:', data)),
                 filter(data => data.index === this.index)
             )
             .subscribe(

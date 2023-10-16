@@ -50,7 +50,7 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
                 ]
             ],
             age: [,
-                [Validators.required, Validators.min(5)]
+                [Validators.required, Validators.min(5), Validators.max(80)]
             ],
             gender: [defaultGender, [Validators.required]],
         });

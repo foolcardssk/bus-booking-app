@@ -77,8 +77,18 @@
                             >
                                 Age must be at least 5.
                             </div>
+                            <div
+                                *ngIf="
+                                    form.get('age').hasError('max') &&
+                                    form.get('age').touched
+                                "
+                                class="text-danger"
+                            >
+                                Safe Travel age Exceeded
+                                <br />
+                                (Must be 80 or less).
+                            </div>
                         </div>
-
                         <div class="col">
                             <label for="gender" class="form-label"
                                 >Gender:</label
