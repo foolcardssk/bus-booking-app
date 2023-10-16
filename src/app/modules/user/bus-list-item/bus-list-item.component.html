@@ -40,8 +40,15 @@
     <div class="container" *ngIf="viewSeats">
         <hr class="hr-divider" />
         <div class="d-flex">
-            <app-bus-seats class="col-6" [bus-seat]="bus"></app-bus-seats>
-            <app-bus-seat-price class="col-6"></app-bus-seat-price>
+            <app-bus-seats
+                class="col-6"
+                [track-index]="index"
+                [bus-seat]="bus"
+            ></app-bus-seats>
+            <app-bus-seat-price
+                class="col-6"
+                [track-index]="index"
+            ></app-bus-seat-price>
         </div>
     </div>
 </div>

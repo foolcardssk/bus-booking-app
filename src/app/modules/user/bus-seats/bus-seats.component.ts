@@ -7,18 +7,14 @@ import { SeatBookingService } from 'src/app/services/seat-booking.service';
     templateUrl: './bus-seats.component.html',
     styleUrls: ['./bus-seats.component.css']
 })
-export class BusSeatsComponent implements OnInit {
+export class BusSeatsComponent {
 
     scale: number = 0.8;
     @Input('bus-seat') bus: Bus;
+    @Input('track-index') index: number;
     pickedSeats: Seat[] = [];
 
-
     constructor(private seatBookingService: SeatBookingService) { }
-
-    ngOnInit(): void {
-
-    }
 
     isSeatSelected(seatNo: string) {
         for (let seat of this.pickedSeats) {
@@ -28,7 +24,6 @@ export class BusSeatsComponent implements OnInit {
         }
         return '#ffffff';
     }
-
 
     onUnbookedSeatClick(seatNo: string, seatType: string, seatPrice: number, seatConstraint: boolean) {
         for (let seat of this.pickedSeats) {
@@ -48,8 +43,10 @@ export class BusSeatsComponent implements OnInit {
         }
         this.seatBookingService.selectedSeats.next({
             seats: this.pickedSeats,
-            busNo: this.bus.busNo
+            busNo: this.bus.busNo,
+            index: this.index
         });
+        console.log('Emitted by ', this.index);
     }
 
 }

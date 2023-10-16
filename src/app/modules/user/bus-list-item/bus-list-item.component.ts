@@ -9,4 +9,8 @@ import { Bus } from 'src/app/models/bus-data.model';
 export class BusListItemComponent {
     viewSeats: boolean = false;
     @Input('bus-item') bus: Bus;
+    @Input('track-index') index: number;
+    ngOnInit(){
+        console.log('got index ', this.index);
+    }
 }

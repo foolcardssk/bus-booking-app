@@ -9,7 +9,7 @@ import { BusManageService } from './bus-manage.service';
 })
 export class SeatBookingService {
 
-    selectedSeats = new BehaviorSubject<{ busNo: string, seats: Seat[] }>({ busNo: '', seats: [] });
+    selectedSeats = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
     seatsToBeBooked = new BehaviorSubject<{ busNo: string, seats: Seat[] }>({ busNo: '', seats: [] });
 
     constructor(private firestore: AngularFirestore, private busManageService: BusManageService) { }

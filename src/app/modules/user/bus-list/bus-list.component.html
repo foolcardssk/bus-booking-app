@@ -1,6 +1,7 @@
 <div class="container bus-list">
     <app-bus-list-item
-        *ngFor="let bus of buses"
+        *ngFor="let bus of buses; let i = index;"
         [bus-item]="bus"
+        [track-index]="i+1"
     ></app-bus-list-item>
 </div>
