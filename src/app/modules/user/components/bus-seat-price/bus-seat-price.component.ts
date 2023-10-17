@@ -14,7 +14,6 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
     @Input('track-index') index: number;
     seats: Seat[];
     busNo: string;
-
     selectedSeatSubscription: Subscription;
 
     constructor(private seatBookingService: SeatBookingService, private router: Router) { }
@@ -41,6 +40,14 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
     }
 
     onContinueToDetailsPage() {
+        this.seatBookingService.selectedSeatsToPersonalInfoPage.next({
+            busNo: this.busNo,
+            seats: this.seats,
+            index: this.index
+        });
+
+        this.seatBookingService.clearSelectedSeats();
+
         this.router.navigate(['/traveller/details']);
     }
 

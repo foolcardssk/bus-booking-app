@@ -10,12 +10,17 @@ import { BusManageService } from './bus-manage.service';
 export class SeatBookingService {
 
     selectedSeats = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
+    selectedSeatsToPersonalInfoPage = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
     seatsToBeBooked = new BehaviorSubject<{ busNo: string, seats: Seat[] }>({ busNo: '', seats: [] });
 
     constructor(private firestore: AngularFirestore, private busManageService: BusManageService) { }
 
     getAllBuses(): Observable<Bus[]> {
         return this.firestore.collection<Bus>('Buses').valueChanges();
+    }
+
+    clearSelectedSeats() {
+        this.selectedSeats.next({ busNo: '', seats: [], index: 0 });
     }
 
     bookUserSeats(busNo: string, selectedSeats: Seat[], uid: string) {

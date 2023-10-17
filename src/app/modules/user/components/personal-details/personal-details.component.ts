@@ -24,7 +24,7 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        this.selectedSeatSubscription = this.seatBookingService.selectedSeats
+        this.selectedSeatSubscription = this.seatBookingService.selectedSeatsToPersonalInfoPage
             .subscribe(
                 seats => {
                     this.selectedSeats = seats.seats;
