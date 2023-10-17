@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { AdminAuthGuard } from './gaurds/admin-auth.guard';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { UnauthorizedComponent } from './shared/unauthorized/unauthorized.component';
 import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
 const redirectLoggedInToBase = () => redirectLoggedInTo(['/traveller/home']);
