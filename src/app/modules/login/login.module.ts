@@ -11,18 +11,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    UserLoginComponent,
-    UserSignupComponent,
-    LoginBaseComponent
-  ],
-  imports: [
-    CommonModule,
-    LoginRoutingModule,
-    MaterialModule,
-    FontAwesomeModule,
-    NgbModule,
-    ReactiveFormsModule
-  ]
+    declarations: [
+        UserLoginComponent,
+        UserSignupComponent,
+        LoginBaseComponent
+    ],
+    imports: [
+        CommonModule,
+        LoginRoutingModule,
+        MaterialModule,
+        FontAwesomeModule,
+        NgbModule,
+        ReactiveFormsModule
+    ]
 })
 export class LoginModule { }
