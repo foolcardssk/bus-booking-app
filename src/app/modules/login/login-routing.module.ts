@@ -4,12 +4,12 @@ import { LoginBaseComponent } from './components/login-base/login-base.component
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: LoginBaseComponent },
-  { path: '**', component: PageNotFoundComponent }
+    { path: '', component: LoginBaseComponent },
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class LoginRoutingModule { }

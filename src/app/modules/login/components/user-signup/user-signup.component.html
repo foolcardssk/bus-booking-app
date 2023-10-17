@@ -1,70 +1,74 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSignup()">
-  <div class="container text-center">
-    <div class="form-outline mb-4 mt-4">
-      <div class="title">
-        Sign-Up
-        <fa-icon [icon]="faBus"></fa-icon>
-      </div>
+    <div class="container text-center">
+        <div class="form-outline mb-4 mt-4">
+            <div class="title">
+                Sign-Up
+                <fa-icon [icon]="faBus"></fa-icon>
+            </div>
+        </div>
+
+        <div class="form-outline mb-4 mt-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input
+                    formControlName="username"
+                    type="text"
+                    matInput
+                    placeholder="How to Address You?"
+                />
+            </mat-form-field>
+        </div>
+
+        <!-- Email input -->
+        <div class="form-outline mb-4 mt-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input
+                    formControlName="email"
+                    type="text"
+                    matInput
+                    placeholder="Your Email"
+                />
+            </mat-form-field>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4 mt-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input
+                    type="password"
+                    formControlName="password"
+                    matInput
+                    placeholder="Min. 8 characters"
+                />
+            </mat-form-field>
+
+            <div
+                class="error-message"
+                *ngIf="registerForm.get('password').hasError('pattern')"
+            >
+                <mat-error>
+                    Min. 1 uppercase, 1 lowercase, 1 special character, 1
+                    numeric, and be at least 8 characters long.
+                </mat-error>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-outline mb-4">
+            <button
+                [disabled]="registerForm.invalid"
+                type="submit"
+                mat-stroked-button
+                color="primary"
+            >
+                SignUp
+            </button>
+        </div>
     </div>
 
-    <div class="form-outline mb-4 mt-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input
-          formControlName="username"
-          type="text"
-          matInput
-          placeholder="How to Address You?"
-        />
-      </mat-form-field>
+    <div *ngIf="signupError" class="text-danger mb-4 mt-4 text-center">
+        {{ signupError }}
     </div>
-
-    <!-- Email input -->
-    <div class="form-outline mb-4 mt-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input
-          formControlName="email"
-          type="text"
-          matInput
-          placeholder="Your Email"
-        />
-      </mat-form-field>
-    </div>
-
-    <!-- Password input -->
-    <div class="form-outline mb-4 mt-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input
-          type="password"
-          formControlName="password"
-          matInput
-          placeholder="Min. 8 characters"
-        />
-      </mat-form-field>
-
-      <div
-        class="error-message"
-        *ngIf="registerForm.get('password').hasError('pattern')"
-      >
-        <mat-error>
-          Min. 1 uppercase, 1 lowercase, 1 special character, 1 numeric, and be
-          at least 8 characters long.
-        </mat-error>
-      </div>
-    </div>
-
-    <!-- Submit button -->
-    <div class="form-outline mb-4">
-      <button
-        [disabled]="registerForm.invalid"
-        type="submit"
-        mat-stroked-button
-        color="primary"
-      >
-        SignUp
-      </button>
-    </div>
-  </div>
 </form>

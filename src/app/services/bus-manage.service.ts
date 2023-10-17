@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Bus, Seat, BookingLog, SeatLog } from '../models/bus-data.model';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import * as md5 from 'md5';
 
@@ -9,6 +9,7 @@ import * as md5 from 'md5';
     providedIn: 'root'
 })
 export class BusManageService {
+
     constructor(private firestore: AngularFirestore) { }
 
     private generateBusNo(source: string, destination: string, busName: string): string {
@@ -20,7 +21,6 @@ export class BusManageService {
     private generateSeats(count: number, seatType: string, row: number) {
         const seats = [];
         const price = seatType === 'seated' ? 700 : seatType === 'sleeper-lower' ? 1200 : seatType === 'sleeper-upper' ? 1100 : 0;
-
         for (let i = 1; i <= count; i++) {
             seats.push({
                 price,
@@ -33,7 +33,6 @@ export class BusManageService {
                 seatConstraint: false
             } as Seat);
         }
-
         return seats;
     }
 
@@ -73,7 +72,6 @@ export class BusManageService {
             gender: seat.gender,
             seatConstraint: seat.seatConstraint
         }));
-
         const logEntry: BookingLog = {
             status: 'booked',
             timestamp: timestamp,
@@ -81,8 +79,19 @@ export class BusManageService {
             busNo,
             bookedSeats: seatLogs,
         };
-
         return this.firestore.collection('bookingLogs').doc(timestamp).set(logEntry);
+    }
+
+    private findSeat(bus: Bus, seatNumber: string): Seat | undefined {
+        const allSeats = [
+            ...bus.lowerDeck.row1,
+            ...bus.lowerDeck.row2,
+            ...bus.lowerDeck.row3,
+            ...bus.upperDeck.row1,
+            ...bus.upperDeck.row2,
+            ...bus.upperDeck.row3
+        ];
+        return allSeats.find(seat => seat.seatNumber === seatNumber);
     }
 
     editBusInfo(busNo: string, newDepartureTime: string, newArrivalTime: string): Promise<void> {
@@ -94,10 +103,8 @@ export class BusManageService {
             .then((doc) => {
                 if (doc.exists) {
                     const bus: Bus = doc.data() as Bus;
-
                     bus.departureTime = newDepartureTime;
                     bus.arrivalTime = newArrivalTime;
-
                     return this.firestore.collection('Buses').doc(busNo).set(bus)
                         .then(() => console.log('Bus information updated successfully'))
                         .catch((error) => console.error('Error updating bus information:', error));
@@ -128,9 +135,6 @@ export class BusManageService {
             .catch((error) => console.error('Error getting bus document:', error));
     }
 
-
-
-
     bookSeats(busNo: string, selectedSeats: Seat[], uid: string) {
         return this.firestore
             .collection('Buses')
@@ -141,7 +145,6 @@ export class BusManageService {
                     if (doc.exists) {
                         const bus: Bus = doc.data() as Bus;
                         const bookedSeatsCount = selectedSeats.length;
-
                         selectedSeats.forEach((selectedSeat) => {
                             const seat = this.findSeat(bus, selectedSeat.seatNumber);
                             if (seat) {
@@ -157,9 +160,7 @@ export class BusManageService {
                                 }
                             }
                         });
-
                         bus.availSeats -= bookedSeatsCount;
-
                         // Create a log entry
                         return this.createLogEntry(uid, busNo, selectedSeats)
                             .then(() => this.firestore.collection('Buses').doc(busNo).set(bus))
@@ -182,15 +183,12 @@ export class BusManageService {
             .then((doc) => {
                 if (doc.exists) {
                     const bus: Bus = doc.data() as Bus;
-
                     log.bookedSeats.forEach((canceledSeat) => {
                         const seat = this.findSeat(bus, canceledSeat.seatNumber);
                         if (seat) {
                             seat.booked = false;
                             seat.name = '';
                             seat.age = null;
-                            // seat.gender = '';
-
                             if (
                                 seat.gender === 'female' &&
                                 [1, 2, 4, 5].includes(+seat.seatNumber.charAt(1))
@@ -203,11 +201,8 @@ export class BusManageService {
                             }
                         }
                     });
-
                     bus.availSeats += log.bookedSeats.length;
-
                     log.status = 'canceled';
-
                     return this.firestore
                         .collection('Buses')
                         .doc(log.busNo)
@@ -221,7 +216,6 @@ export class BusManageService {
                 }
             });
     }
-
 
     findAdjacentSeat(bus: Bus, seat: Seat): Seat | undefined {
         const { row, col } = this.getSeatRowAndCol(seat.seatNumber);
@@ -254,21 +248,8 @@ export class BusManageService {
             ...this.generateBusLayout(busName),
             busNo: this.generateBusNo(source, destination, busName)
         };
-
         this.pushBusToFirestore(newBus)
             .catch(error => console.error('Error adding bus to Firestore:', error));
     }
 
-    private findSeat(bus: Bus, seatNumber: string): Seat | undefined {
-        const allSeats = [
-            ...bus.lowerDeck.row1,
-            ...bus.lowerDeck.row2,
-            ...bus.lowerDeck.row3,
-            ...bus.upperDeck.row1,
-            ...bus.upperDeck.row2,
-            ...bus.upperDeck.row3
-        ];
-
-        return allSeats.find(seat => seat.seatNumber === seatNumber);
-    }
 }

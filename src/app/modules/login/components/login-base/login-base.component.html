@@ -1,24 +1,28 @@
 <mat-card class="signup">
-  <div *ngIf="signinState; else elsePart">
-    <app-user-login></app-user-login>
-    <div class="text-center">
-      <p>
-        Not a member?
-        <button mat-button color="primary" (click)="switchStateRegister()">
-          Register
-        </button>
-      </p>
+    <div *ngIf="signinState; else elsePart">
+        <app-user-login></app-user-login>
+        <div class="text-center">
+            <p>
+                Not a member?
+                <button
+                    mat-button
+                    color="primary"
+                    (click)="switchStateRegister()"
+                >
+                    Register
+                </button>
+            </p>
+        </div>
     </div>
-  </div>
-  <ng-template #elsePart>
-    <app-user-signup></app-user-signup>
-    <div class="text-center">
-      <p>
-        Not a member?
-        <button mat-button color="primary" (click)="switchStateLogin()">
-          Login
-        </button>
-      </p>
-    </div>
-  </ng-template>
+    <ng-template #elsePart>
+        <app-user-signup></app-user-signup>
+        <div class="text-center">
+            <p>
+                Already a member?
+                <button mat-button color="primary" (click)="switchStateLogin()">
+                    Login
+                </button>
+            </p>
+        </div>
+    </ng-template>
 </mat-card>

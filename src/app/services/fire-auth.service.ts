@@ -3,22 +3,22 @@ import { Creds } from '../models/credentials.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FireAuthService {
 
-  constructor(private auth: AngularFireAuth) { }
+    constructor(private auth: AngularFireAuth) { }
 
-  userLogin(creds: Creds){
-    return this.auth.signInWithEmailAndPassword(creds.email, creds.password);
-  }
+    userLogin(creds: Creds) {
+        return this.auth.signInWithEmailAndPassword(creds.email, creds.password);
+    }
 
-  userSignup(creds: Creds){
-    return this.auth.createUserWithEmailAndPassword(creds.email, creds.password);
-  }
+    userSignup(creds: Creds) {
+        return this.auth.createUserWithEmailAndPassword(creds.email, creds.password);
+    }
 
-  userLogout(){
-    return this.auth.signOut()
-  }
+    userLogout() {
+        return this.auth.signOut()
+    }
 
 }

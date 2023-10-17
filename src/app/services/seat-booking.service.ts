@@ -18,11 +18,11 @@ export class SeatBookingService {
         return this.firestore.collection<Bus>('Buses').valueChanges();
     }
 
-    bookUserSeats(busNo: string, selectedSeats: Seat[], uid: string){
+    bookUserSeats(busNo: string, selectedSeats: Seat[], uid: string) {
         return this.busManageService.bookSeats(busNo, selectedSeats, uid);
     }
 
-    deleteBus(busNo: string){
+    deleteBus(busNo: string) {
         return this.busManageService.deleteBus(busNo);
     }
 }
