@@ -2,3 +2,10 @@
     font-weight: bold;
     font-size: 32px;
 }
+
+.error-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: red;
+}

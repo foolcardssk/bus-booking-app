@@ -1,2 +1,18 @@
-<!-- <a routerLink="/traveller/home">Home</a><br> -->
-<router-outlet></router-outlet>
+<div class="container">
+    <div class="navbar fixed-top bg-light d-flex justify-content-end p-3">
+        <div class="ml-auto">
+            <button
+                mat-stroked-button
+                *ngIf=""
+                (click)="onGoBack()"
+                class="mr-2"
+            >
+                Back
+            </button>
+            <button mat-stroked-button (click)="onSignout()">Signout</button>
+        </div>
+    </div>
+    <div style="margin-top: 100px">
+        <router-outlet></router-outlet>
+    </div>
+</div>

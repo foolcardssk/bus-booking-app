@@ -1,5 +1,5 @@
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, inject } from '@angular/core';
 import { Subscription, filter, map, tap } from 'rxjs';
 import { Seat } from 'src/app/models/bus-data.model';
 import { Router } from '@angular/router';
@@ -12,11 +12,14 @@ import { Router } from '@angular/router';
 export class BusSeatPriceComponent implements OnInit, OnDestroy {
 
     @Input('track-index') index: number;
-    seats: Seat[];
+
     busNo: string;
+    seats: Seat[];
+
     selectedSeatSubscription: Subscription;
 
-    constructor(private seatBookingService: SeatBookingService, private router: Router) { }
+    private seatBookingService = inject(SeatBookingService);
+    private router = inject(Router);
 
     ngOnInit(): void {
         this.selectedSeatSubscription = this.seatBookingService.selectedSeats
@@ -45,9 +48,7 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
             seats: this.seats,
             index: this.index
         });
-
         this.seatBookingService.clearSelectedSeats();
-
         this.router.navigate(['/traveller/details']);
     }
 

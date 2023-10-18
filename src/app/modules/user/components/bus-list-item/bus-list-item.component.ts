@@ -7,10 +7,13 @@ import { Bus } from 'src/app/models/bus-data.model';
     styleUrls: ['./bus-list-item.component.css']
 })
 export class BusListItemComponent {
-    viewSeats: boolean = false;
+
     @Input('bus-item') bus: Bus;
     @Input('track-index') index: number;
-    ngOnInit(){
+
+    viewSeats: boolean = false;
+
+    ngOnInit() {
         console.log('got index ', this.index);
     }
 }

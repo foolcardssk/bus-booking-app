@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { UserHomeComponent } from './components/user-home/user-home.component';
 import { MaterialModule } from '../material/material.module';
-import { BusSearchComponent } from './components/bus-search/bus-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BusListComponent } from './components/bus-list/bus-list.component';
 import { BusListItemComponent } from './components/bus-list-item/bus-list-item.component';
@@ -18,7 +17,6 @@ import { BookingSummaryComponent } from './components/booking-summary/booking-su
 @NgModule({
     declarations: [
         UserHomeComponent,
-        BusSearchComponent,
         BusListComponent,
         BusListItemComponent,
         BusSeatsComponent,

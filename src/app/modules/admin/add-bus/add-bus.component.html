@@ -49,7 +49,7 @@
                     <input
                         matInput
                         formControlName="departureTime"
-                        placeholder="Starting Time"
+                        placeholder="Ex : 10:00 AM"
                     />
                 </mat-form-field>
             </div>
@@ -61,7 +61,7 @@
                     <input
                         matInput
                         formControlName="arrivalTime"
-                        placeholder="Destination reach Time"
+                        placeholder="Ex : 03:00 PM"
                     />
                 </mat-form-field>
             </div>
@@ -69,12 +69,17 @@
             <div class="container mt-4 mb-4 text-center">
                 Only One Bus Model is Available So far. It will be Selected as
                 the Default Model. <br />
-                <b>L:18S-5SL U:0S-15SL</b>
+                <b>{{ model }}</b>
             </div>
 
             <!-- Submit Button -->
             <div class="text-center">
-                <button mat-raised-button color="primary" type="submit">
+                <button
+                    [disabled]="busForm.invalid"
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                >
                     Submit
                 </button>
             </div>

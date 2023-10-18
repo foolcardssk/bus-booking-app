@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Creds } from '../models/credentials.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
@@ -7,14 +7,14 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class FireAuthService {
 
-    constructor(private auth: AngularFireAuth) { }
+    private auth = inject(AngularFireAuth);
 
     userLogin(creds: Creds) {
-        return this.auth.signInWithEmailAndPassword(creds.email, creds.password);
+        return this.auth.signInWithEmailAndPassword(creds.email.toLowerCase(), creds.password);
     }
 
     userSignup(creds: Creds) {
-        return this.auth.createUserWithEmailAndPassword(creds.email, creds.password);
+        return this.auth.createUserWithEmailAndPassword(creds.email.toLowerCase(), creds.password);
     }
 
     userLogout() {

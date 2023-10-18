@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SeatBookingService } from 'src/app/services/seat-booking.service';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Seat } from 'src/app/models/bus-data.model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FireAuthService } from 'src/app/services/fire-auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { SeatBookingService } from 'src/app/services/seat-booking.service';
 
 @Component({
     selector: 'app-booking-summary',
@@ -14,19 +13,18 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class BookingSummaryComponent implements OnInit, OnDestroy {
 
-    bookingData: Seat[];
+    uid: string;
     busNo: string;
+    bookingData: Seat[];
+
     bookingSubscription: Subscription;
     uidSubscription: Subscription;
     selectedSeatBookingSubscription: Subscription;
-    uid: string;
 
-    constructor(
-        private seatBookingService: SeatBookingService,
-        private router: Router,
-        private snackBar: MatSnackBar,
-        private auth: AngularFireAuth
-    ) { }
+    private auth = inject(AngularFireAuth);
+    private router = inject(Router);
+    private snackBar = inject(MatSnackBar);
+    private seatBookingService = inject(SeatBookingService);
 
     ngOnInit(): void {
 
@@ -51,7 +49,8 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
     }
 
     proceedToPayment() {
-        this.selectedSeatBookingSubscription = this.seatBookingService.bookUserSeats(this.busNo, this.bookingData, this.uid)
+        this.selectedSeatBookingSubscription = this.seatBookingService
+            .bookUserSeats(this.busNo, this.bookingData, this.uid)
             .subscribe(() => {
                 this.showSnackBar('Payment successful ! . Redirecting...');
                 this.router.navigate(['/traveller/home']);
@@ -65,7 +64,7 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
 
     showSnackBar(message: string) {
         this.snackBar.open(message, 'Close', {
-            duration: 3000,
+            duration: 2000,
         });
     }
 }

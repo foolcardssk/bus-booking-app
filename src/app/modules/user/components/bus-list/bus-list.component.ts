@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Bus } from 'src/app/models/bus-data.model';
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
@@ -13,7 +13,7 @@ export class BusListComponent implements OnInit, OnDestroy {
     buses: Bus[] = [];
     allBusesSubscription: Subscription;
 
-    constructor(private seatBookingService: SeatBookingService) { }
+    private seatBookingService = inject(SeatBookingService);
 
     ngOnInit(): void {
         this.allBusesSubscription = this.seatBookingService.getAllBuses()

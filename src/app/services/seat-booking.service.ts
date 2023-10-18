@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Bus, Seat } from '../models/bus-data.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -10,10 +10,11 @@ import { BusManageService } from './bus-manage.service';
 export class SeatBookingService {
 
     selectedSeats = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
-    selectedSeatsToPersonalInfoPage = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
     seatsToBeBooked = new BehaviorSubject<{ busNo: string, seats: Seat[] }>({ busNo: '', seats: [] });
+    selectedSeatsToPersonalInfoPage = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
 
-    constructor(private firestore: AngularFirestore, private busManageService: BusManageService) { }
+    private firestore = inject(AngularFirestore);
+    private busManageService = inject(BusManageService);
 
     getAllBuses(): Observable<Bus[]> {
         return this.firestore.collection<Bus>('Buses').valueChanges();

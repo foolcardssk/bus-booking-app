@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Bus, Seat } from 'src/app/models/bus-data.model';
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
 
@@ -9,12 +9,13 @@ import { SeatBookingService } from 'src/app/services/seat-booking.service';
 })
 export class BusSeatsComponent {
 
-    scale: number = 0.8;
     @Input('bus-seat') bus: Bus;
     @Input('track-index') index: number;
+
+    scale: number = 0.8;
     pickedSeats: Seat[] = [];
 
-    constructor(private seatBookingService: SeatBookingService) { }
+    private seatBookingService = inject(SeatBookingService);
 
     isSeatSelected(seatNo: string) {
         for (let seat of this.pickedSeats) {
@@ -37,8 +38,8 @@ export class BusSeatsComponent {
                 seatNumber: seatNo,
                 seatType: seatType,
                 price: seatPrice,
-                booked: false,
-                seatConstraint: seatConstraint
+                seatConstraint: seatConstraint,
+                booked: false
             });
         }
         this.seatBookingService.selectedSeats.next({
@@ -46,7 +47,6 @@ export class BusSeatsComponent {
             busNo: this.bus.busNo,
             index: this.index
         });
-        console.log('Emitted by ', this.index);
     }
 
 }

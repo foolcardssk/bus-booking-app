@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBus } from '@fortawesome/free-solid-svg-icons';
 import { FireAuthService } from 'src/app/services/fire-auth.service';
@@ -12,21 +12,42 @@ import { FireStoreService } from 'src/app/services/fire-store.service';
 })
 export class UserLoginComponent implements OnInit {
     faBus = faBus;
-    signinError: string | null = null;
-    loginForm: FormGroup;
+    loginForm: FormGroup<{
+        email: FormControl<string>;
+        password: FormControl<string>;
+    }>;
 
-    constructor(private fb: FormBuilder, private authService: FireAuthService, private router: Router, private db: FireStoreService) { }
+    signinError: string | null = null;
+
+    private fb = inject(FormBuilder);
+    private db = inject(FireStoreService);
+    private router = inject(Router);
+    private authService = inject(FireAuthService);
 
     ngOnInit(): void {
         this.loginForm = this.fb.group({
-            email: [, [Validators.required, Validators.email]],
-            password: [, [Validators.required, Validators.minLength(8)]]
+            email: ['',
+                [
+                    Validators.required,
+                    Validators.minLength(6),
+                    Validators.maxLength(30),
+                    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/)
+                ]
+            ],
+            password: ['',
+                [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.maxLength(30)
+                ]
+            ]
         });
     }
 
     onLogin() {
         this.signinError = null;
-        this.authService.userLogin(this.loginForm.value)
+        const { email, password } = this.loginForm.value;
+        this.authService.userLogin({ email, password })
             .then(user => {
                 this.db.getUserRoleByUid(user.user.uid)
                     .subscribe(res => {

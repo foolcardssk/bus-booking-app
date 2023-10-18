@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserRole } from '../models/firestore-data.model';
 
@@ -7,7 +7,7 @@ import { UserRole } from '../models/firestore-data.model';
 })
 export class FireStoreService {
 
-    constructor(private afs: AngularFirestore) { }
+    private afs = inject(AngularFirestore);
 
     addUserRole(uid: string, role: string): Promise<void> {
         const userRole: UserRole = { uid, role };

@@ -1,8 +1,8 @@
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Seat } from 'src/app/models/bus-data.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,19 +12,25 @@ import { Router } from '@angular/router';
 })
 export class PersonalDetailsComponent implements OnInit, OnDestroy {
 
-    selectedSeats: Seat[];
     busNo: string;
-    selectedSeatSubscription: Subscription;
-    personalDetailForms: FormGroup[] = [];
+    selectedSeats: Seat[];
 
-    constructor(
-        private seatBookingService: SeatBookingService,
-        private fb: FormBuilder,
-        private router: Router,
-    ) { }
+    personalDetailForms: FormGroup<{
+        age: FormControl<number>;
+        name: FormControl<string>;
+        seatNo: FormControl<string>;
+        gender: FormControl<string>;
+    }>[];
+
+    selectedSeatSubscription: Subscription;
+
+    private fb = inject(FormBuilder);
+    private router = inject(Router);
+    private seatBookingService = inject(SeatBookingService);
 
     ngOnInit(): void {
-        this.selectedSeatSubscription = this.seatBookingService.selectedSeatsToPersonalInfoPage
+        this.selectedSeatSubscription = this.seatBookingService
+            .selectedSeatsToPersonalInfoPage
             .subscribe(
                 seats => {
                     this.selectedSeats = seats.seats;
@@ -32,10 +38,6 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
                     this.personalDetailForms = this.selectedSeats.map(seat => this.createSeatForm(seat));
                 }
             );
-    }
-
-    ngOnDestroy(): void {
-        this.selectedSeatSubscription.unsubscribe();
     }
 
     private createSeatForm(seat: Seat): FormGroup {
@@ -68,31 +70,24 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
     onSubmit(): void {
         this.personalDetailForms.forEach((form, index) => {
             const seat = this.selectedSeats[index];
-
             if (seat) {
                 seat.name = form.value.name;
                 seat.age = form.value.age;
                 seat.gender = form.value.gender;
             }
         });
-
         this.seatBookingService.seatsToBeBooked.next({
             busNo: this.busNo,
             seats: this.selectedSeats
         })
-
-        console.log(this.busNo, this.selectedSeats)
         this.router.navigate(['/traveller/booking-summary']);
-
-        // this.selectedSeatBookingSubscription = this.seatBookingService.bookUserSeats(this.busNo, this.selectedSeats)
-        //     .subscribe(() => {
-        //         console.log('Seats booked successfully');
-        //     });
-        // this.selectedSeatBookingSubscription.unsubscribe();
     }
 
     goToPreviousPage() {
         this.router.navigate(['/traveller/home']);
     }
 
+    ngOnDestroy(): void {
+        this.selectedSeatSubscription.unsubscribe();
+    }
 }

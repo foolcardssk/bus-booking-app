@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Bus, Seat, BookingLog, SeatLog } from '../models/bus-data.model';
 import { switchMap } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import * as md5 from 'md5';
 })
 export class BusManageService {
 
-    constructor(private firestore: AngularFirestore) { }
+    private firestore = inject(AngularFirestore);
 
     private generateBusNo(source: string, destination: string, busName: string): string {
         const inputString = `${source}-${destination}-${busName}`;
@@ -75,9 +75,9 @@ export class BusManageService {
         const logEntry: BookingLog = {
             status: 'booked',
             timestamp: timestamp,
+            bookedSeats: seatLogs,
             uid,
             busNo,
-            bookedSeats: seatLogs,
         };
         return this.firestore.collection('bookingLogs').doc(timestamp).set(logEntry);
     }
@@ -161,7 +161,6 @@ export class BusManageService {
                             }
                         });
                         bus.availSeats -= bookedSeatsCount;
-                        // Create a log entry
                         return this.createLogEntry(uid, busNo, selectedSeats)
                             .then(() => this.firestore.collection('Buses').doc(busNo).set(bus))
                             .then(() => console.log('Seats booked successfully'))
@@ -245,8 +244,8 @@ export class BusManageService {
             source,
             destination,
             model,
-            ...this.generateBusLayout(busName),
-            busNo: this.generateBusNo(source, destination, busName)
+            busNo: this.generateBusNo(source, destination, busName),
+            ...this.generateBusLayout(busName)
         };
         this.pushBusToFirestore(newBus)
             .catch(error => console.error('Error adding bus to Firestore:', error));

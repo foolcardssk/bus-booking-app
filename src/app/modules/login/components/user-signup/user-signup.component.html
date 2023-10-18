@@ -1,3 +1,4 @@
+<!-- user-signup.component.html -->
 <form [formGroup]="registerForm" (ngSubmit)="onSignup()">
     <div class="container text-center">
         <div class="form-outline mb-4 mt-4">
@@ -44,15 +45,29 @@
                 />
             </mat-form-field>
 
-            <div
-                class="error-message"
-                *ngIf="registerForm.get('password').hasError('pattern')"
-            >
-                <mat-error>
-                    Min. 1 uppercase, 1 lowercase, 1 special character, 1
-                    numeric, and be at least 8 characters long.
-                </mat-error>
-            </div>
+            <ul class="error-list" *ngIf="registerForm.get('password').touched">
+                <li *ngIf="registerForm.get('password').hasError('required')">
+                    Password is required.
+                </li>
+                <li *ngIf="registerForm.get('password').hasError('minlength')">
+                    At least 8 characters long.
+                </li>
+                <li *ngIf="registerForm.get('password').hasError('maxlength')">
+                    Password cannot exceed 30 characters.
+                </li>
+                <li *ngIf="registerForm.get('password').hasError('uppercase')">
+                    At least 1 uppercase letter.
+                </li>
+                <li *ngIf="registerForm.get('password').hasError('lowercase')">
+                    At least 1 lowercase letter.
+                </li>
+                <li *ngIf="registerForm.get('password').hasError('numeric')">
+                    At least 1 numeric digit.
+                </li>
+                <li *ngIf="registerForm.get('password').hasError('special')">
+                    At least 1 special character.
+                </li>
+            </ul>
         </div>
 
         <!-- Submit button -->
