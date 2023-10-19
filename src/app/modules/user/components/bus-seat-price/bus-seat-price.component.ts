@@ -18,8 +18,8 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
 
     selectedSeatSubscription: Subscription;
 
-    private seatBookingService = inject(SeatBookingService);
     private router = inject(Router);
+    private seatBookingService = inject(SeatBookingService);
 
     ngOnInit(): void {
         this.selectedSeatSubscription = this.seatBookingService.selectedSeats

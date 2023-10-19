@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Bus } from 'src/app/models/bus-data.model';
 import { SeatBookingService } from 'src/app/services/seat-booking.service';
 
@@ -8,23 +8,13 @@ import { SeatBookingService } from 'src/app/services/seat-booking.service';
     templateUrl: './bus-list.component.html',
     styleUrls: ['./bus-list.component.css']
 })
-export class BusListComponent implements OnInit, OnDestroy {
-
-    buses: Bus[] = [];
-    allBusesSubscription: Subscription;
+export class BusListComponent {
 
     private seatBookingService = inject(SeatBookingService);
 
-    ngOnInit(): void {
-        this.allBusesSubscription = this.seatBookingService.getAllBuses()
-            .subscribe(
-                buses => {
-                    this.buses = buses;
-                }
-            );
-    }
+    buses$: Observable<Bus[]>;
 
-    ngOnDestroy(): void {
-        this.allBusesSubscription.unsubscribe();
+    ngOnInit(): void {
+        this.buses$ = this.seatBookingService.getAllBuses();
     }
 }

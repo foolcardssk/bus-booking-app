@@ -26,7 +26,7 @@
             </tr>
         </tbody>
     </table>
-    <div *ngIf="seats.length > 0" class="text-center">
+    <div *ngIf="seats?.length > 0" class="text-center">
         <br /><b>Total : </b>
         <i class="fa-solid fa-indian-rupee-sign indian-rupee-icon"></i>
         {{ calculateTotal() }}

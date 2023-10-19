@@ -12,8 +12,4 @@ export class BusListItemComponent {
     @Input('track-index') index: number;
 
     viewSeats: boolean = false;
-
-    ngOnInit() {
-        console.log('got index ', this.index);
-    }
 }
