@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, inject } from '@angular/core';
+import { Observable, map, take, tap } from 'rxjs';
 import { Seat } from 'src/app/models/bus-data.model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,37 +11,29 @@ import { SeatBookingService } from 'src/app/services/seat-booking.service';
     templateUrl: './booking-summary.component.html',
     styleUrls: ['./booking-summary.component.css']
 })
-export class BookingSummaryComponent implements OnInit, OnDestroy {
-
-    uid: string;
-    busNo: string;
-    bookingData: Seat[];
-
-    bookingSubscription: Subscription;
-    uidSubscription: Subscription;
-    selectedSeatBookingSubscription: Subscription;
+export class BookingSummaryComponent implements OnInit {
 
     private auth = inject(AngularFireAuth);
     private router = inject(Router);
     private snackBar = inject(MatSnackBar);
     private seatBookingService = inject(SeatBookingService);
 
+    uid: string;
+    busNo: string;
+    bookingData$: Observable<Seat[]>;
+
     ngOnInit(): void {
 
-        this.uidSubscription = this.auth.authState.subscribe(user => {
-            this.uid = user.uid;
+        this.auth.authState.pipe(take(1)).subscribe(user => {
+            this.uid = user?.uid;
         });
 
-        this.bookingSubscription = this.seatBookingService.seatsToBeBooked
-            .subscribe(data => {
-                this.bookingData = data.seats;
-                this.busNo = data.busNo;
-            });
-    }
-
-    ngOnDestroy(): void {
-        this.bookingSubscription.unsubscribe();
-        this.uidSubscription.unsubscribe();
+        // FIXME : busNo is undefined !
+        this.bookingData$ = this.seatBookingService.seatsToBeBooked
+            .pipe(
+                tap(data => data.busNo),
+                map(data => data.seats)
+            )
     }
 
     goToPreviousPage() {
@@ -49,13 +41,22 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
     }
 
     proceedToPayment() {
-        this.selectedSeatBookingSubscription = this.seatBookingService
-            .bookUserSeats(this.busNo, this.bookingData, this.uid)
-            .subscribe(() => {
-                this.showSnackBar('Payment successful ! . Redirecting...');
-                this.router.navigate(['/traveller/home']);
-            });
+        this.bookingData$.pipe(take(1)).subscribe({
+            next: seats => {
+                if (this.uid && seats) {
+                    this.seatBookingService.bookUserSeats(this.busNo, seats, this.uid)
+                        .pipe(take(1))
+                        .subscribe(() => {
+                            this.showSnackBar('Payment successful! Redirecting...');
+                            this.router.navigate(['/traveller/home']);
+                        });
+                } else {
+                    console.error('UID or seats is not available for payment.');
+                }
+            }
+        });
     }
+
 
     onCancel() {
         this.showSnackBar('Booking Canceled...');
@@ -66,5 +67,9 @@ export class BookingSummaryComponent implements OnInit, OnDestroy {
         this.snackBar.open(message, 'Close', {
             duration: 2000,
         });
+    }
+
+    trackBySeatNo(seat: Seat) {
+        return seat.seatNumber;
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { Bus, Seat } from '../models/bus-data.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BusManageService } from './bus-manage.service';
@@ -9,8 +9,8 @@ import { BusManageService } from './bus-manage.service';
 })
 export class SeatBookingService {
 
+    seatsToBeBooked = new ReplaySubject<{ busNo: string, seats: Seat[] }>(0);
     selectedSeats = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
-    seatsToBeBooked = new BehaviorSubject<{ busNo: string, seats: Seat[] }>({ busNo: '', seats: [] });
     selectedSeatsToPersonalInfoPage = new BehaviorSubject<{ busNo: string, seats: Seat[], index: number }>({ busNo: '', seats: [], index: 0 });
 
     private firestore = inject(AngularFirestore);

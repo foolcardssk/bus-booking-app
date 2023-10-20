@@ -1,11 +1,13 @@
 <div
     class="container"
     style="margin-top: 70px"
-    *ngIf="bookingLogs.length > 0; else noLogs"
+    *ngIf="bookingLogs$ | async as bookingLogs; else noLogs"
 >
     <h2 class="text-center mt-4 mb-4">Booking Logs</h2>
-
-    <div class="card mb-4" *ngFor="let log of bookingLogs">
+    <div
+        class="card mb-4"
+        *ngFor="let log of bookingLogs; trackBy: trackByTime"
+    >
         <div class="card-header">
             <ng-container *ngIf="log.status === 'booked'">
                 <button

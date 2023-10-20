@@ -17,4 +17,8 @@ export class BusListComponent {
     ngOnInit(): void {
         this.buses$ = this.seatBookingService.getAllBuses();
     }
+
+    trackByNo(bus: Bus) {
+        return bus.busNo;
+    }
 }

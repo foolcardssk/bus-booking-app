@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Bus, Seat, BookingLog, SeatLog } from '../models/bus-data.model';
 import { switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, firstValueFrom, of } from 'rxjs';
 import * as md5 from 'md5';
 
 @Injectable({
@@ -95,11 +95,7 @@ export class BusManageService {
     }
 
     editBusInfo(busNo: string, newDepartureTime: string, newArrivalTime: string): Promise<void> {
-        return this.firestore
-            .collection('Buses')
-            .doc(busNo)
-            .get()
-            .toPromise()
+        return firstValueFrom(this.firestore.collection('Buses').doc(busNo).get())
             .then((doc) => {
                 if (doc.exists) {
                     const bus: Bus = doc.data() as Bus;
@@ -117,11 +113,7 @@ export class BusManageService {
     }
 
     deleteBus(busNo: string): Promise<void> {
-        return this.firestore
-            .collection('Buses')
-            .doc(busNo)
-            .get()
-            .toPromise()
+        return firstValueFrom(this.firestore.collection('Buses').doc(busNo).get())
             .then((doc) => {
                 if (doc.exists) {
                     return this.firestore.collection('Buses').doc(busNo).delete()
@@ -174,11 +166,7 @@ export class BusManageService {
     }
 
     cancelBooking(log: BookingLog): Promise<void> {
-        return this.firestore
-            .collection('Buses')
-            .doc(log.busNo)
-            .get()
-            .toPromise()
+        return firstValueFrom(this.firestore.collection('Buses').doc(log.busNo).get())
             .then((doc) => {
                 if (doc.exists) {
                     const bus: Bus = doc.data() as Bus;

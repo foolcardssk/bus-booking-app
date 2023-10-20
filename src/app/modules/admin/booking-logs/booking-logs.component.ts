@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { BookingLog } from 'src/app/models/bus-data.model';
 import { BusManageService } from 'src/app/services/bus-manage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-booking-logs',
@@ -10,19 +11,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class BookingLogsComponent implements OnInit {
 
-    bookingLogs: BookingLog[] = [];
+    private snackBar = inject(MatSnackBar);
+    private busManageService = inject(BusManageService);
 
-    constructor(private busManageService: BusManageService, private snackBar: MatSnackBar) { }
+    bookingLogs$: Observable<BookingLog[]>;
 
     ngOnInit(): void {
-        this.loadBookingLogs();
-    }
-
-    loadBookingLogs() {
-        this.busManageService.getAllBookingLogs()
-            .subscribe(
-                logs => this.bookingLogs = logs
-            );
+        this.bookingLogs$ = this.busManageService.getAllBookingLogs();
     }
 
     cancelBooking(log: BookingLog) {
@@ -38,5 +33,9 @@ export class BookingLogsComponent implements OnInit {
                     duration: 3000,
                 });
             });
+    }
+
+    trackByTime(log: BookingLog) {
+        return log.timestamp;
     }
 }

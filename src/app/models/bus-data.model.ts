@@ -9,17 +9,6 @@ export interface Seat {
     seatConstraint?: boolean;
 }
 
-interface lowerDeck {
-    row1: Seat[];
-    row2: Seat[];
-    row3: Seat[];
-}
-
-interface UpperDeck {
-    row1: Seat[];
-    row2: Seat[];
-    row3: Seat[];
-}
 
 export interface Bus {
     departureTime?: string;
@@ -34,7 +23,7 @@ export interface Bus {
     availSeats: number;
 }
 
-export interface SeatLog{
+export interface SeatLog {
     seatNumber: string;
     name?: string;
     age?: number;
@@ -42,10 +31,22 @@ export interface SeatLog{
     seatConstraint?: boolean;
 }
 
-export interface BookingLog{
+export interface BookingLog {
     status: string;
     timestamp: string;
     uid: string;
     busNo: string;
     bookedSeats: SeatLog[];
+}
+
+interface lowerDeck {
+    row1: Seat[];
+    row2: Seat[];
+    row3: Seat[];
+}
+
+interface UpperDeck {
+    row1: Seat[];
+    row2: Seat[];
+    row3: Seat[];
 }

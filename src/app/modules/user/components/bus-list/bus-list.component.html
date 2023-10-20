@@ -1,7 +1,7 @@
 <div class="container bus-list">
     <ng-container *ngIf="buses$ | async as buses">
         <app-bus-list-item
-            *ngFor="let bus of buses; let i = index"
+            *ngFor="let bus of buses; let i = index; trackBy: trackByNo"
             [bus-item]="bus"
             [track-index]="i + 1"
         ></app-bus-list-item>
