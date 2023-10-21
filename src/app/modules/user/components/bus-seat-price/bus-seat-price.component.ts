@@ -52,6 +52,10 @@ export class BusSeatPriceComponent implements OnInit, OnDestroy {
         this.router.navigate(['/traveller/details']);
     }
 
+    trackByNo(seat: Seat){
+        return seat.seatNumber;
+    }
+
     ngOnDestroy(): void {
         this.selectedSeatSubscription.unsubscribe();
     }

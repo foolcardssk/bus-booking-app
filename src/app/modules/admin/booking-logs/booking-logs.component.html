@@ -27,7 +27,7 @@
             <ul class="list-group">
                 <li
                     class="list-group-item"
-                    *ngFor="let seat of log.bookedSeats"
+                    *ngFor="let seat of log.bookedSeats; trackBy: trackByNo"
                 >
                     <div
                         style="

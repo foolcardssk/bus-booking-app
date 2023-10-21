@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { BookingLog } from 'src/app/models/bus-data.model';
+import { BookingLog, SeatLog } from 'src/app/models/bus-data.model';
 import { BusManageService } from 'src/app/services/bus-manage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
@@ -37,5 +37,9 @@ export class BookingLogsComponent implements OnInit {
 
     trackByTime(log: BookingLog) {
         return log.timestamp;
+    }
+
+    trackByNo(seatLog: SeatLog) {
+        return seatLog.seatNumber;
     }
 }

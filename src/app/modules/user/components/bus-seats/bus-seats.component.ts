@@ -49,5 +49,13 @@ export class BusSeatsComponent {
         });
     }
 
+    trackByIndex(index: number) {
+        return index;
+    }
+
+    trackByNo(seat: Seat) {
+        return seat.seatNumber;
+    }
+
 }
 

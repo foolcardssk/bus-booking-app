@@ -1,8 +1,8 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4">Seat Personal Info</h2>
 
-    <ng-container *ngIf="personalDetailForms.length > 0; else emptySeats">
-        <div *ngFor="let form of personalDetailForms">
+    <ng-container *ngIf="personalDetailForms?.length > 0; else emptySeats">
+        <div *ngFor="let form of personalDetailForms; let i = index; trackBy: trackByIndex">
             <div class="card mb-4 size-it">
                 <h4 class="card-header">
                     Seat {{ form.get("seatNo").value }}

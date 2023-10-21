@@ -2,7 +2,7 @@ import { SeatBookingService } from 'src/app/services/seat-booking.service';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Seat } from 'src/app/models/bus-data.model';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -85,6 +85,10 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
 
     goToPreviousPage() {
         this.router.navigate(['/traveller/home']);
+    }
+
+    trackByIndex(index: number) {
+        return index;
     }
 
     ngOnDestroy(): void {

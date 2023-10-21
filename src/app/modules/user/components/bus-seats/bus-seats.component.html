@@ -42,11 +42,16 @@
                     <ng-container
                         *ngFor="
                             let row of bus.lowerDeck | keyvalue;
-                            let rowIndex = index
+                            let rowIndex = index;
+                            trackBy: trackByIndex
                         "
                     >
                         <ng-container
-                            *ngFor="let seat of row.value; let i = index"
+                            *ngFor="
+                                let seat of row.value;
+                                let i = index;
+                                trackBy: trackByNo
+                            "
                         >
                             <!-- Check if the seat is unbooked -->
                             <ng-container *ngIf="!seat.booked">
@@ -169,11 +174,16 @@
                     <ng-container
                         *ngFor="
                             let row of bus.upperDeck | keyvalue;
-                            let rowIndex = index
+                            let rowIndex = index;
+                            trackBy: trackByIndex
                         "
                     >
                         <ng-container
-                            *ngFor="let seat of row.value; let i = index"
+                            *ngFor="
+                                let seat of row.value;
+                                let i = index;
+                                trackBy: trackByNo
+                            "
                         >
                             <!-- Check if the seat is unbooked -->
                             <ng-container *ngIf="!seat.booked">
