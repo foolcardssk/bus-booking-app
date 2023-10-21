@@ -28,10 +28,10 @@ export class BookingSummaryComponent implements OnInit {
             this.uid = user?.uid;
         });
 
-        // FIXME : busNo is undefined !
         this.bookingData$ = this.seatBookingService.seatsToBeBooked
+            .asObservable()
             .pipe(
-                tap(data => data.busNo),
+                tap(data => this.busNo = data.busNo),
                 map(data => data.seats)
             )
     }
